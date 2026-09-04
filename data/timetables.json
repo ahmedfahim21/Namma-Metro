@@ -1,0 +1,410 @@
+[
+  {
+    "line": "purple",
+    "direction": "Whitefield-bound",
+    "directionIndex": 0,
+    "dayType": "weekday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 720
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "purple",
+    "direction": "Whitefield-bound",
+    "directionIndex": 0,
+    "dayType": "saturday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 360
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "purple",
+    "direction": "Whitefield-bound",
+    "directionIndex": 0,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "purple",
+    "direction": "Challaghatta-bound",
+    "directionIndex": 1,
+    "dayType": "weekday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 720
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "purple",
+    "direction": "Challaghatta-bound",
+    "directionIndex": 1,
+    "dayType": "saturday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 360
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "purple",
+    "direction": "Challaghatta-bound",
+    "directionIndex": 1,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "green",
+    "direction": "Silk Institute-bound",
+    "directionIndex": 0,
+    "dayType": "weekday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 720
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "green",
+    "direction": "Silk Institute-bound",
+    "directionIndex": 0,
+    "dayType": "saturday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 360
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "green",
+    "direction": "Silk Institute-bound",
+    "directionIndex": 0,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "green",
+    "direction": "Madavara-bound",
+    "directionIndex": 1,
+    "dayType": "weekday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 420
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 240
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 720
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "green",
+    "direction": "Madavara-bound",
+    "directionIndex": 1,
+    "dayType": "saturday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 360
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "green",
+    "direction": "Madavara-bound",
+    "directionIndex": 1,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "yellow",
+    "direction": "Bommasandra-bound",
+    "directionIndex": 0,
+    "dayType": "weekday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 600
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 360
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 600
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 360
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 900
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "yellow",
+    "direction": "Bommasandra-bound",
+    "directionIndex": 0,
+    "dayType": "saturday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 600
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "yellow",
+    "direction": "Bommasandra-bound",
+    "directionIndex": 0,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 720
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "yellow",
+    "direction": "RV Road-bound",
+    "directionIndex": 1,
+    "dayType": "weekday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 600
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 360
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 600
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 360
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 900
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "yellow",
+    "direction": "RV Road-bound",
+    "directionIndex": 1,
+    "dayType": "saturday",
+    "firstTrainMinute": 300,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 600
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  },
+  {
+    "line": "yellow",
+    "direction": "RV Road-bound",
+    "directionIndex": 1,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 720
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+  }
+]

@@ -1,0 +1,83 @@
+{
+  "slabs": [
+    {
+      "minStops": 1,
+      "maxStops": 2,
+      "tokenFare": 10
+    },
+    {
+      "minStops": 3,
+      "maxStops": 4,
+      "tokenFare": 20
+    },
+    {
+      "minStops": 5,
+      "maxStops": 6,
+      "tokenFare": 30
+    },
+    {
+      "minStops": 7,
+      "maxStops": 8,
+      "tokenFare": 40
+    },
+    {
+      "minStops": 9,
+      "maxStops": 11,
+      "tokenFare": 50
+    },
+    {
+      "minStops": 12,
+      "maxStops": 15,
+      "tokenFare": 60
+    },
+    {
+      "minStops": 16,
+      "maxStops": 19,
+      "tokenFare": 70
+    },
+    {
+      "minStops": 20,
+      "maxStops": 24,
+      "tokenFare": 80
+    },
+    {
+      "minStops": 25,
+      "maxStops": 999,
+      "tokenFare": 90
+    }
+  ],
+  "sameStationFare": 10,
+  "qrDiscountPct": 5,
+  "smartCardPeakDiscountPct": 5,
+  "smartCardOffPeakDiscountPct": 10,
+  "peakWindows": [
+    {
+      "startMinute": 420,
+      "endMinute": 600
+    },
+    {
+      "startMinute": 1020,
+      "endMinute": 1230
+    }
+  ],
+  "fullDiscountDates": [
+    "01-26",
+    "08-15",
+    "10-02"
+  ],
+  "passes": [
+    {
+      "id": "day_qr",
+      "label": "1-Day QR Pass",
+      "validDays": 1,
+      "price": 250
+    },
+    {
+      "id": "three_day_qr",
+      "label": "3-Day QR Pass",
+      "validDays": 3,
+      "price": 600
+    }
+  ],
+  "source": "BMRCL fare notification + Deccan Herald 'QR-code based passes' coverage, checked September 2026. Not the official fare chart — verify against bmrc.co.in before relying on it for payment."
+}

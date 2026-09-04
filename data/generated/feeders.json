@@ -1,0 +1,90 @@
+[
+  {
+    "stationId": "nadaprabhu-kempegowda-station-majestic",
+    "busStopName": "Kempegowda Bus Station (Majestic)",
+    "routes": [
+      "Most BMTC trunk routes"
+    ],
+    "walkMeters": 250
+  },
+  {
+    "stationId": "mahatma-gandhi-road",
+    "busStopName": "Trinity Circle",
+    "routes": [
+      "335E",
+      "365"
+    ],
+    "walkMeters": 150
+  },
+  {
+    "stationId": "baiyappanahalli",
+    "busStopName": "Baiyappanahalli Bus Stop",
+    "routes": [
+      "290",
+      "291"
+    ],
+    "walkMeters": 200
+  },
+  {
+    "stationId": "whitefield-kadugodi",
+    "busStopName": "Kadugodi Bus Stand",
+    "routes": [
+      "335E",
+      "500D"
+    ],
+    "walkMeters": 300
+  },
+  {
+    "stationId": "yeshwanthpur",
+    "busStopName": "Yeshwanthpur Bus Stop",
+    "routes": [
+      "251",
+      "253"
+    ],
+    "walkMeters": 180
+  },
+  {
+    "stationId": "rashtreeya-vidyalaya-road",
+    "busStopName": "RV Road Bus Stop",
+    "routes": [
+      "215",
+      "219"
+    ],
+    "walkMeters": 150
+  },
+  {
+    "stationId": "jayanagar",
+    "busStopName": "Jayanagar 4th Block",
+    "routes": [
+      "210",
+      "215"
+    ],
+    "walkMeters": 220
+  },
+  {
+    "stationId": "banashankari",
+    "busStopName": "Banashankari Bus Stand",
+    "routes": [
+      "Multiple south routes"
+    ],
+    "walkMeters": 250
+  },
+  {
+    "stationId": "central-silk-board",
+    "busStopName": "Silk Board Junction",
+    "routes": [
+      "500C",
+      "500D"
+    ],
+    "walkMeters": 200
+  },
+  {
+    "stationId": "electronic-city",
+    "busStopName": "Electronic City Toll Gate",
+    "routes": [
+      "356",
+      "600"
+    ],
+    "walkMeters": 280
+  }
+]

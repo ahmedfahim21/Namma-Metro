@@ -1,0 +1,50 @@
+[
+  {
+    "id": "purple",
+    "name": "Purple Line",
+    "nameKn": "ನೇರಳೆ ಮಾರ್ಗ",
+    "color": "#7B2D8E",
+    "status": "operational",
+    "terminals": [
+      "Challaghatta",
+      "Whitefield (Kadugodi)"
+    ],
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "id": "green",
+    "name": "Green Line",
+    "nameKn": "ಹಸಿರು ಮಾರ್ಗ",
+    "color": "#2E9E4C",
+    "status": "operational",
+    "terminals": [
+      "Madavara",
+      "Silk Institute"
+    ],
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "id": "yellow",
+    "name": "Yellow Line",
+    "nameKn": "ಹಳದಿ ಮಾರ್ಗ",
+    "color": "#F2C300",
+    "status": "operational",
+    "terminals": [
+      "Rashtreeya Vidyalaya Road",
+      "Delta Electronics Bommasandra"
+    ],
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "id": "pink",
+    "name": "Pink Line",
+    "nameKn": "ಗುಲಾಬಿ ಮಾರ್ಗ",
+    "color": "#EC6EAD",
+    "status": "under_construction",
+    "terminals": [
+      "Kalena Agrahara",
+      "Nagawara"
+    ],
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "name": "Namma Metro Planner",
+  "short_name": "Namma Metro",
+  "description": "Offline-first Bengaluru metro route planner: fares, timings and first/last mile.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f8fa",
+  "theme_color": "#7b2d8e",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

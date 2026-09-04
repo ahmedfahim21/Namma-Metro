@@ -1,0 +1,754 @@
+[
+  {
+    "line": "purple",
+    "from": "challaghatta",
+    "to": "kengeri",
+    "runSeconds": 60,
+    "distanceMeters": 348,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "kengeri",
+    "to": "kengeri-bus-terminal",
+    "runSeconds": 157,
+    "distanceMeters": 1394,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "kengeri-bus-terminal",
+    "to": "pattanagere",
+    "runSeconds": 157,
+    "distanceMeters": 1394,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "pattanagere",
+    "to": "jnanabharathi",
+    "runSeconds": 157,
+    "distanceMeters": 1394,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "jnanabharathi",
+    "to": "rajarajeshwari-nagar",
+    "runSeconds": 157,
+    "distanceMeters": 1394,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "rajarajeshwari-nagar",
+    "to": "nayandahalli",
+    "runSeconds": 157,
+    "distanceMeters": 1394,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "nayandahalli",
+    "to": "mysuru-road",
+    "runSeconds": 113,
+    "distanceMeters": 1006,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "mysuru-road",
+    "to": "deepanjali-nagar",
+    "runSeconds": 89,
+    "distanceMeters": 795,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "deepanjali-nagar",
+    "to": "attiguppe",
+    "runSeconds": 89,
+    "distanceMeters": 795,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "attiguppe",
+    "to": "vijayanagar",
+    "runSeconds": 89,
+    "distanceMeters": 795,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "vijayanagar",
+    "to": "hosahalli",
+    "runSeconds": 110,
+    "distanceMeters": 977,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "hosahalli",
+    "to": "magadi-road",
+    "runSeconds": 110,
+    "distanceMeters": 977,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "magadi-road",
+    "to": "krantivira-sangolli-rayanna-railway-station",
+    "runSeconds": 110,
+    "distanceMeters": 977,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "krantivira-sangolli-rayanna-railway-station",
+    "to": "nadaprabhu-kempegowda-station-majestic",
+    "runSeconds": 67,
+    "distanceMeters": 596,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "nadaprabhu-kempegowda-station-majestic",
+    "to": "sir-m-visvesvaraya-station-central-college",
+    "runSeconds": 109,
+    "distanceMeters": 965,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "sir-m-visvesvaraya-station-central-college",
+    "to": "dr-br-ambedkar-station-vidhana-soudha",
+    "runSeconds": 109,
+    "distanceMeters": 965,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "dr-br-ambedkar-station-vidhana-soudha",
+    "to": "cubbon-park",
+    "runSeconds": 109,
+    "distanceMeters": 965,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "cubbon-park",
+    "to": "mahatma-gandhi-road",
+    "runSeconds": 109,
+    "distanceMeters": 965,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "mahatma-gandhi-road",
+    "to": "trinity",
+    "runSeconds": 138,
+    "distanceMeters": 1228,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "trinity",
+    "to": "halasuru",
+    "runSeconds": 138,
+    "distanceMeters": 1228,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "halasuru",
+    "to": "indiranagar",
+    "runSeconds": 138,
+    "distanceMeters": 1228,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "indiranagar",
+    "to": "swami-vivekananda-road",
+    "runSeconds": 114,
+    "distanceMeters": 1010,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "swami-vivekananda-road",
+    "to": "baiyappanahalli",
+    "runSeconds": 114,
+    "distanceMeters": 1010,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "baiyappanahalli",
+    "to": "benniganahalli",
+    "runSeconds": 259,
+    "distanceMeters": 2302,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "benniganahalli",
+    "to": "krishnarajapura",
+    "runSeconds": 259,
+    "distanceMeters": 2302,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "krishnarajapura",
+    "to": "singayyanapalya",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "singayyanapalya",
+    "to": "garudacharpalya",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "garudacharpalya",
+    "to": "hoodi",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "hoodi",
+    "to": "seetharamapalya",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "seetharamapalya",
+    "to": "kundalahalli",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "kundalahalli",
+    "to": "nallurhalli",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "nallurhalli",
+    "to": "pattandur-agrahara",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "pattandur-agrahara",
+    "to": "kadugodi-tree-park",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "kadugodi-tree-park",
+    "to": "hopefarm-channasandra",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "purple",
+    "from": "hopefarm-channasandra",
+    "to": "whitefield-kadugodi",
+    "runSeconds": 65,
+    "distanceMeters": 574,
+    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+  },
+  {
+    "line": "green",
+    "from": "madavara",
+    "to": "chikkabidarakallu",
+    "runSeconds": 70,
+    "distanceMeters": 621,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "chikkabidarakallu",
+    "to": "manjunath-nagar",
+    "runSeconds": 70,
+    "distanceMeters": 621,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "manjunath-nagar",
+    "to": "nagasandra",
+    "runSeconds": 70,
+    "distanceMeters": 621,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "nagasandra",
+    "to": "dasarahalli",
+    "runSeconds": 100,
+    "distanceMeters": 892,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "dasarahalli",
+    "to": "jalahalli",
+    "runSeconds": 100,
+    "distanceMeters": 892,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "jalahalli",
+    "to": "peenya-industry",
+    "runSeconds": 100,
+    "distanceMeters": 892,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "peenya-industry",
+    "to": "peenya",
+    "runSeconds": 100,
+    "distanceMeters": 892,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "peenya",
+    "to": "goraguntepalya",
+    "runSeconds": 100,
+    "distanceMeters": 892,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "goraguntepalya",
+    "to": "yeshwanthpur",
+    "runSeconds": 100,
+    "distanceMeters": 892,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "yeshwanthpur",
+    "to": "sandal-soap-factory",
+    "runSeconds": 154,
+    "distanceMeters": 1368,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "sandal-soap-factory",
+    "to": "mahalakshmi",
+    "runSeconds": 154,
+    "distanceMeters": 1368,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "mahalakshmi",
+    "to": "rajajinagar",
+    "runSeconds": 154,
+    "distanceMeters": 1368,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "rajajinagar",
+    "to": "kuvempu-road",
+    "runSeconds": 69,
+    "distanceMeters": 613,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "kuvempu-road",
+    "to": "srirampura",
+    "runSeconds": 69,
+    "distanceMeters": 613,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "srirampura",
+    "to": "mantri-square-sampige-road",
+    "runSeconds": 69,
+    "distanceMeters": 613,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "mantri-square-sampige-road",
+    "to": "nadaprabhu-kempegowda-station-majestic",
+    "runSeconds": 69,
+    "distanceMeters": 613,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "nadaprabhu-kempegowda-station-majestic",
+    "to": "chickpete",
+    "runSeconds": 145,
+    "distanceMeters": 1290,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "chickpete",
+    "to": "krishna-rajendra-market",
+    "runSeconds": 145,
+    "distanceMeters": 1290,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "krishna-rajendra-market",
+    "to": "national-college",
+    "runSeconds": 145,
+    "distanceMeters": 1290,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "national-college",
+    "to": "lalbagh",
+    "runSeconds": 60,
+    "distanceMeters": 533,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "lalbagh",
+    "to": "south-end-circle",
+    "runSeconds": 60,
+    "distanceMeters": 533,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "south-end-circle",
+    "to": "jayanagar",
+    "runSeconds": 60,
+    "distanceMeters": 533,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "jayanagar",
+    "to": "rashtreeya-vidyalaya-road",
+    "runSeconds": 184,
+    "distanceMeters": 1637,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "rashtreeya-vidyalaya-road",
+    "to": "banashankari",
+    "runSeconds": 388,
+    "distanceMeters": 3451,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "banashankari",
+    "to": "jaya-prakash-nagar",
+    "runSeconds": 172,
+    "distanceMeters": 1526,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "jaya-prakash-nagar",
+    "to": "yelachenahalli",
+    "runSeconds": 172,
+    "distanceMeters": 1526,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "yelachenahalli",
+    "to": "konanakunte-cross",
+    "runSeconds": 80,
+    "distanceMeters": 712,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "konanakunte-cross",
+    "to": "doddakallasandra",
+    "runSeconds": 80,
+    "distanceMeters": 712,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "doddakallasandra",
+    "to": "vajarahalli",
+    "runSeconds": 80,
+    "distanceMeters": 712,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "vajarahalli",
+    "to": "thalaghattapura",
+    "runSeconds": 80,
+    "distanceMeters": 712,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "green",
+    "from": "thalaghattapura",
+    "to": "silk-institute",
+    "runSeconds": 80,
+    "distanceMeters": 712,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "rashtreeya-vidyalaya-road",
+    "to": "ragigudda",
+    "runSeconds": 121,
+    "distanceMeters": 1075,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "ragigudda",
+    "to": "jayadeva-hospital",
+    "runSeconds": 121,
+    "distanceMeters": 1075,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "jayadeva-hospital",
+    "to": "btm-layout",
+    "runSeconds": 121,
+    "distanceMeters": 1075,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "btm-layout",
+    "to": "central-silk-board",
+    "runSeconds": 121,
+    "distanceMeters": 1075,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "central-silk-board",
+    "to": "bommanahalli",
+    "runSeconds": 143,
+    "distanceMeters": 1273,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "bommanahalli",
+    "to": "hongasandra",
+    "runSeconds": 143,
+    "distanceMeters": 1273,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "hongasandra",
+    "to": "kudlu-gate",
+    "runSeconds": 143,
+    "distanceMeters": 1273,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "kudlu-gate",
+    "to": "singasandra",
+    "runSeconds": 143,
+    "distanceMeters": 1273,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "singasandra",
+    "to": "hosa-road",
+    "runSeconds": 143,
+    "distanceMeters": 1274,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "hosa-road",
+    "to": "beratena-agrahara",
+    "runSeconds": 143,
+    "distanceMeters": 1274,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "beratena-agrahara",
+    "to": "electronic-city",
+    "runSeconds": 143,
+    "distanceMeters": 1274,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "electronic-city",
+    "to": "infosys-foundation-konappana-agrahara",
+    "runSeconds": 164,
+    "distanceMeters": 1454,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "infosys-foundation-konappana-agrahara",
+    "to": "huskur-road",
+    "runSeconds": 164,
+    "distanceMeters": 1454,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "huskur-road",
+    "to": "biocon-hebbagodi",
+    "runSeconds": 164,
+    "distanceMeters": 1454,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "yellow",
+    "from": "biocon-hebbagodi",
+    "to": "delta-electronics-bommasandra",
+    "runSeconds": 164,
+    "distanceMeters": 1454,
+    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+  },
+  {
+    "line": "pink",
+    "from": "kalena-agrahara",
+    "to": "tavarekere",
+    "runSeconds": 277,
+    "distanceMeters": 2459,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "tavarekere",
+    "to": "jayadeva-hospital",
+    "runSeconds": 277,
+    "distanceMeters": 2459,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "jayadeva-hospital",
+    "to": "dairy-circle",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "dairy-circle",
+    "to": "audugodi",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "audugodi",
+    "to": "south-end-circle-pink-line",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "south-end-circle-pink-line",
+    "to": "lakkasandra",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "lakkasandra",
+    "to": "national-military-school",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "national-military-school",
+    "to": "langford-town",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "langford-town",
+    "to": "shanthinagar",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "shanthinagar",
+    "to": "corporation-circle",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "corporation-circle",
+    "to": "vidhana-soudha-pink-line",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "vidhana-soudha-pink-line",
+    "to": "mattikere",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  },
+  {
+    "line": "pink",
+    "from": "mattikere",
+    "to": "nagawara",
+    "runSeconds": 127,
+    "distanceMeters": 1131,
+    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+  }
+]

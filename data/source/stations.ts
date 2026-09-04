@@ -242,6 +242,31 @@ export const interchanges: Record<string, LineId[]> = {
   "Jayadeva Hospital": ["yellow", "pink"],
 };
 
+/**
+ * Familiar short names, for the many BMRCL stations whose official name is a
+ * commemorative mouthful. Locals say "Majestic" and "RV Road"; signage and
+ * announcements use both. The full name stays canonical for page titles and
+ * search — these are used wherever space is tight (map labels, lists, the
+ * route strip).
+ */
+export const shortNames: Record<string, string> = {
+  "Nadaprabhu Kempegowda Station, Majestic": "Majestic",
+  "Krantivira Sangolli Rayanna Railway Station": "City Railway Station",
+  "Sir M. Visvesvaraya Station, Central College": "Sir M. Visvesvaraya",
+  "Dr. B.R. Ambedkar Station, Vidhana Soudha": "Vidhana Soudha",
+  "Whitefield (Kadugodi)": "Whitefield",
+  "Krishnarajapura": "KR Puram",
+  "Rashtreeya Vidyalaya Road": "RV Road",
+  "Mantri Square Sampige Road": "Sampige Road",
+  "Krishna Rajendra Market": "KR Market",
+  "Infosys Foundation Konappana Agrahara": "Konappana Agrahara",
+  "Delta Electronics Bommasandra": "Bommasandra",
+  "Biocon Hebbagodi": "Hebbagodi",
+  "Mahatma Gandhi Road": "MG Road",
+  "Swami Vivekananda Road": "Swami Vivekananda Rd",
+  "Jaya Prakash Nagar": "JP Nagar",
+};
+
 /** Manually-set interchange walking transfer time, in seconds. */
 export const interchangeWalkSeconds: Record<string, number> = {
   "Nadaprabhu Kempegowda Station, Majestic": 240,

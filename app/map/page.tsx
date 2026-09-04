@@ -1,19 +1,27 @@
 import type { Metadata } from "next";
 import { MetroMap } from "@/components/MetroMap";
+import { routableStations, lines } from "@/lib/network";
 
 export const metadata: Metadata = {
-  title: "Metro Map",
-  description: "Interactive Namma Metro line map — Purple, Green, Yellow, and Pink (opening soon).",
+  title: "Network map",
+  description:
+    "Schematic map of the Namma Metro network — Purple, Green and Yellow lines in service, Pink under construction.",
 };
 
 export default function MapPage() {
+  const operationalCount = lines.filter((l) => l.status === "operational").length;
+
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6">
-      <h1 className="mb-1 text-2xl font-bold">Metro Map</h1>
-      <p className="mb-4 text-sm text-muted">
-        Tap a station to plan a trip from it. Grey stations are under construction.
+    <div className="mx-auto max-w-3xl px-5 pt-10 pb-10">
+      <h1 className="display text-[1.875rem] font-semibold sm:text-[2.25rem]">Network map</h1>
+      <p className="mt-3 max-w-lg text-[0.9375rem] leading-relaxed text-ink-secondary">
+        {routableStations.length} stations across {operationalCount} lines in service. Tap any
+        station for timings, facilities and feeder buses. Positions are geographic estimates, not
+        survey data.
       </p>
-      <MetroMap />
+      <div className="mt-7">
+        <MetroMap />
+      </div>
     </div>
   );
 }

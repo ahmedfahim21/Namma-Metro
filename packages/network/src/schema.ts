@@ -35,7 +35,14 @@ export const ExitGateSchema = z.object({
 export const StationSchema = z.object({
   id: z.string(),
   slug: z.string(),
+  /** Full official name — used for page titles, metadata and search. */
   name: z.string(),
+  /**
+   * What locals actually call the station, where that differs from the
+   * official name ("Majestic", not "Nadaprabhu Kempegowda Station,
+   * Majestic"). Used anywhere space is tight; falls back to `name`.
+   */
+  shortName: z.string().optional(),
   nameKn: z.string().optional(),
   lat: z.number(),
   lng: z.number(),

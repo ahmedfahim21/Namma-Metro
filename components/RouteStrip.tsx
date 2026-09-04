@@ -173,11 +173,15 @@ export function RouteStrip({ itinerary }: { itinerary: Itinerary }) {
                 </button>
 
                 {isOpen && (
-                  <ol className="mt-1.5 space-y-1 border-l border-hairline pl-3 text-[0.8125rem] text-ink-muted">
-                    {intermediate.map((id) => (
-                      <li key={id}>{displayNameById(id)}</li>
-                    ))}
-                  </ol>
+                  <div className="animate-expand mt-1.5">
+                    <div>
+                      <ol className="space-y-1 border-l border-hairline pl-3 text-[0.8125rem] text-ink-muted">
+                        {intermediate.map((id) => (
+                          <li key={id}>{displayNameById(id)}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

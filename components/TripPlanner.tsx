@@ -16,6 +16,8 @@ import { estimateDepartures, directionIndexForLeg, formatClock } from "@/package
 import { quoteFare } from "@/packages/fares/src/index";
 import { formatDuration, formatDistance } from "@/lib/format";
 import { StationCombobox } from "./StationCombobox";
+import { JourneyMap } from "./JourneyMap";
+import { Countdown } from "./Countdown";
 import { RouteStrip } from "./RouteStrip";
 import { FareTable } from "./FareTable";
 
@@ -63,17 +65,23 @@ function DepartureBar({ itinerary, now }: { itinerary: Itinerary; now: Date }) {
     );
   }
 
+  const next = departure.nextDepartures[0];
+
   return (
     <div className="rounded-md bg-sunken px-3 py-2.5">
-      <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <span className="text-sm text-ink-secondary">Next train</span>
-        <span className="tnum text-[1.0625rem] font-semibold text-ink">
-          ~{Math.round(departure.expectedWaitSeconds / 60)} min
-        </span>
+        {next ? (
+          <Countdown seconds={next.inSeconds} headwaySeconds={departure.headwaySeconds} />
+        ) : (
+          <span className="tnum text-[1.0625rem] font-semibold text-ink">
+            ~{Math.round(departure.expectedWaitSeconds / 60)} min
+          </span>
+        )}
         {towards && <span className="text-sm text-ink-muted">towards {towards}</span>}
-        {departure.nextDepartures.length > 0 && (
+        {departure.nextDepartures.length > 1 && (
           <span className="tnum ml-auto text-[0.8125rem] text-ink-faint">
-            {departure.nextDepartures.map((d) => formatClock(d.minute)).join("  ")}
+            then {departure.nextDepartures.slice(1).map((d) => formatClock(d.minute)).join(", ")}
           </span>
         )}
       </div>
@@ -139,6 +147,7 @@ function ItineraryCard({
 
       <div className="space-y-4 px-4 py-4">
         <DepartureBar itinerary={itinerary} now={now} />
+        <JourneyMap key={itinerary.id} itinerary={itinerary} />
         <RouteStrip itinerary={itinerary} />
         <div className="border-t border-hairline pt-3.5">
           <FareTable fare={fare} />
@@ -300,13 +309,18 @@ export function TripPlanner({
       {now && itineraries.length > 0 && (
         <div className="mt-6 space-y-4">
           {itineraries.map((it, i) => (
-            <ItineraryCard
+            <div
               key={it.id}
-              itinerary={it}
-              now={now}
-              primary={i === 0}
-              showLabels={itineraries.length > 1}
-            />
+              className="animate-rise"
+              style={{ "--rise-delay": `${i * 90}ms` } as React.CSSProperties}
+            >
+              <ItineraryCard
+                itinerary={it}
+                now={now}
+                primary={i === 0}
+                showLabels={itineraries.length > 1}
+              />
+            </div>
           ))}
         </div>
       )}

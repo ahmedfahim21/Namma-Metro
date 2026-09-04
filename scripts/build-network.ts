@@ -8,6 +8,7 @@ import {
   lines as lineDefs,
   interchanges,
   interchangeWalkSeconds,
+  shortNames,
   type LineDef,
 } from "../data/source/stations";
 import { timetables } from "../data/source/timetables";
@@ -91,6 +92,7 @@ for (const def of lineDefs) {
         id,
         slug: id,
         name,
+        shortName: shortNames[name],
         lat: coords[idx].lat,
         lng: coords[idx].lng,
         coordConfidence: "approximate",

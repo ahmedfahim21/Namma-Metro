@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import Script from "next/script";
 import { TripPlanner } from "@/components/TripPlanner";
 import { parseRouteSlug, popularRoutePairs, buildRouteSlug } from "@/lib/routeSlug";
-import { getRouter, fareRules } from "@/lib/network";
+import { getRouter, fareRules, displayName, displayNameById } from "@/lib/network";
 import { formatDuration, formatCurrency } from "@/lib/format";
 import { quoteFare } from "@/packages/fares/src/index";
 
@@ -22,8 +23,8 @@ export async function generateMetadata({
   const parsed = parseRouteSlug(slug);
   if (!parsed) return {};
   const { from, to } = parsed;
-  const title = `${from.name} to ${to.name} Metro Route, Fare & Time`;
-  const description = `Namma Metro route from ${from.name} to ${to.name}: interchanges, travel time, next-train estimate, and fare by token, QR and Smart Card.`;
+  const title = `${from.name} to ${to.name} — metro route, fare & time`;
+  const description = `Namma Metro from ${from.name} to ${to.name}: travel time, interchanges, next-train estimate and the fare by token, mobile QR and Smart Card.`;
   return {
     title,
     description,
@@ -32,50 +33,98 @@ export async function generateMetadata({
   };
 }
 
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="eyebrow">{label}</div>
+      <div className="tnum mt-0.5 text-[0.9375rem] font-semibold text-ink">{value}</div>
+    </div>
+  );
+}
+
 export default async function RoutePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const parsed = parseRouteSlug(slug);
   if (!parsed) notFound();
   const { from, to } = parsed;
 
-  const itineraries = getRouter().planTrip(from.id, to.id);
-  const best = itineraries[0];
+  const [best] = getRouter().planTrip(from.id, to.id);
   const fare = best ? quoteFare(best.totalStops, fareRules) : null;
+  const reverseSlug = buildRouteSlug(to, from);
 
-  const jsonLd = best
-    ? {
-        "@context": "https://schema.org",
-        "@type": "TravelAction",
-        name: `${from.name} to ${to.name} Metro Route`,
-        agent: { "@type": "Organization", name: "Namma Metro" },
-        fromLocation: { "@type": "Place", name: from.name, geo: { "@type": "GeoCoordinates", latitude: from.lat, longitude: from.lng } },
-        toLocation: { "@type": "Place", name: to.name, geo: { "@type": "GeoCoordinates", latitude: to.lat, longitude: to.lng } },
-      }
-    : null;
+  const jsonLd = best && {
+    "@context": "https://schema.org",
+    "@type": "TravelAction",
+    name: `${from.name} to ${to.name} metro route`,
+    agent: { "@type": "Organization", name: "Namma Metro" },
+    fromLocation: {
+      "@type": "Place",
+      name: from.name,
+      geo: { "@type": "GeoCoordinates", latitude: from.lat, longitude: from.lng },
+    },
+    toLocation: {
+      "@type": "Place",
+      name: to.name,
+      geo: { "@type": "GeoCoordinates", latitude: to.lat, longitude: to.lng },
+    },
+  };
 
   return (
-    <div>
+    <div className="pb-10">
       {jsonLd && (
         <Script id="route-jsonld" type="application/ld+json">
           {JSON.stringify(jsonLd)}
         </Script>
       )}
-      <div className="border-b border-border bg-surface">
-        <div className="mx-auto max-w-2xl px-4 pt-8 pb-2">
-          <h1 className="text-2xl font-bold">
-            {from.name} → {to.name}
-          </h1>
-          {best && fare ? (
-            <p className="mt-1 text-sm text-muted">
-              {formatDuration(best.totalDurationSeconds)} · {best.totalStops} stops ·{" "}
-              {best.interchanges.length} interchange{best.interchanges.length === 1 ? "" : "s"} · from{" "}
-              {formatCurrency(fare.cheapest.fare)}
+
+      <section className="mx-auto max-w-2xl px-5 pt-10 pb-7">
+        <nav className="mb-4 text-[0.8125rem] text-ink-muted">
+          <Link href="/" className="transition-colors hover:text-ink">
+            Planner
+          </Link>
+          <span className="mx-1.5 text-ink-faint">/</span>
+          <span>Route</span>
+        </nav>
+
+        <h1 className="display text-[1.875rem] font-semibold sm:text-[2.25rem]">
+          {displayName(from)}
+          <span className="mx-2 font-normal text-ink-faint">to</span>
+          {displayName(to)}
+        </h1>
+
+        {best && fare ? (
+          <>
+            <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-hairline py-4 sm:grid-cols-4">
+              <Stat label="Time" value={formatDuration(best.totalDurationSeconds)} />
+              <Stat label="Stops" value={String(best.totalStops)} />
+              <Stat
+                label="Changes"
+                value={best.interchanges.length === 0 ? "Direct" : String(best.interchanges.length)}
+              />
+              <Stat label="Cheapest fare" value={formatCurrency(fare.cheapest.fare)} />
+            </div>
+            <p className="mt-4 text-[0.9375rem] leading-relaxed text-ink-secondary">
+              {best.interchanges.length === 0
+                ? "A direct trip — no changes needed."
+                : `Change at ${best.interchanges
+                    .map((ic) => displayNameById(ic.station))
+                    .join(", then ")}.`}{" "}
+              <Link
+                href={`/route/${reverseSlug}`}
+                className="underline underline-offset-2 hover:text-ink"
+              >
+                See the return trip
+              </Link>
+              .
             </p>
-          ) : (
-            <p className="mt-1 text-sm text-muted">No route found between these stations yet.</p>
-          )}
-        </div>
-      </div>
+          </>
+        ) : (
+          <p className="mt-4 text-[0.9375rem] text-ink-muted">
+            No route found between these stations on the operational network.
+          </p>
+        )}
+      </section>
+
       <TripPlanner defaultOrigin={from} defaultDestination={to} />
     </div>
   );

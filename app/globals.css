@@ -1,61 +1,175 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Design tokens.
+
+   Two-tier line colours: `-swatch` is the authentic BMRCL line colour, used
+   for graphics (map strokes, dots, spines) where contrast rules are lenient.
+   `-ink` is a contrast-corrected variant used whenever the colour carries
+   TEXT — the real Yellow Line colour is ~1.6:1 on white and unreadable, so
+   text never uses the swatch value directly.
+--------------------------------------------------------------------------- */
+
 :root {
-  --background: #f7f8fa;
+  color-scheme: light;
+
+  --paper: #fbfaf9;
   --surface: #ffffff;
-  --foreground: #14161a;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --accent: #7b2d8e;
+  --sunken: #f4f2ef;
+  --ink: #17171a;
+  --ink-secondary: #46464d;
+  --ink-muted: #78787f;
+  --ink-faint: #9d9da5;
+  --hairline: #e6e3de;
+  --hairline-strong: #d5d1ca;
+  --focus: #2563eb;
+  --inverse-surface: #17171a;
+  --inverse-ink: #fbfaf9;
 
-  --line-purple: #7b2d8e;
-  --line-green: #2e9e4c;
-  --line-yellow: #b8860b;
-  --line-pink: #ec6ead;
-  --line-blue: #1f6feb;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --purple-swatch: #7b2d8e;
+  --purple-ink: #6b2680;
+  --green-swatch: #2e9e4c;
+  --green-ink: #0f7a38;
+  --yellow-swatch: #e0b400;
+  --yellow-ink: #866700;
+  --pink-swatch: #ec6ead;
+  --pink-ink: #b03a78;
+  --blue-swatch: #1f6feb;
+  --blue-ink: #1a5fcc;
+  --inactive-swatch: #bcb9b3;
+  --inactive-ink: #84817b;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0c0d10;
-    --surface: #16181d;
-    --foreground: #f2f3f5;
-    --muted: #9aa0ab;
-    --border: #2a2d34;
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --paper: #0b0b0d;
+    --surface: #131316;
+    --sunken: #1b1b1f;
+    --ink: #f3f3f5;
+    --ink-secondary: #c3c3c9;
+    --ink-muted: #8e8e97;
+    --ink-faint: #6b6b73;
+    --hairline: #26262b;
+    --hairline-strong: #36363d;
+    --focus: #7aa5ff;
+    --inverse-surface: #f3f3f5;
+    --inverse-ink: #131316;
+
+    --purple-swatch: #a855c7;
+    --purple-ink: #cf9fe2;
+    --green-swatch: #3fb862;
+    --green-ink: #6fd694;
+    --yellow-swatch: #f0c000;
+    --yellow-ink: #e0bd53;
+    --pink-swatch: #ec6ead;
+    --pink-ink: #f3a3cd;
+    --blue-swatch: #4f8cf5;
+    --blue-ink: #93b8fb;
+    --inactive-swatch: #4a4a52;
+    --inactive-ink: #7f7f88;
   }
 }
 
-* {
-  border-color: var(--border);
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #0b0b0d;
+  --surface: #131316;
+  --sunken: #1b1b1f;
+  --ink: #f3f3f5;
+  --ink-secondary: #c3c3c9;
+  --ink-muted: #8e8e97;
+  --ink-faint: #6b6b73;
+  --hairline: #26262b;
+  --hairline-strong: #36363d;
+  --focus: #7aa5ff;
+  --inverse-surface: #f3f3f5;
+  --inverse-ink: #131316;
+
+  --purple-swatch: #a855c7;
+  --purple-ink: #cf9fe2;
+  --green-swatch: #3fb862;
+  --green-ink: #6fd694;
+  --yellow-swatch: #f0c000;
+  --yellow-ink: #e0bd53;
+  --pink-swatch: #ec6ead;
+  --pink-ink: #f3a3cd;
+  --blue-swatch: #4f8cf5;
+  --blue-ink: #93b8fb;
+  --inactive-swatch: #4a4a52;
+  --inactive-ink: #7f7f88;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-ink: var(--inverse-ink);
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+*,
+::before,
+::after {
+  border-color: var(--hairline);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
 }
 
-.line-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Numbers that sit in columns — fares, times, stop counts — must not jitter. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Small uppercase section label. Used sparingly. */
+.eyebrow {
+  font-size: 0.6875rem;
   font-weight: 600;
-  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
-.line-dot {
-  width: 0.625rem;
-  height: 0.625rem;
-  border-radius: 9999px;
-  flex-shrink: 0;
+.display {
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

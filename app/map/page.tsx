@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MetroMap } from "@/components/MetroMap";
+import { MetroMapPage } from "@/components/MetroMapPage";
 
 export const metadata: Metadata = {
   title: "Metro Map",
@@ -8,12 +8,13 @@ export const metadata: Metadata = {
 
 export default function MapPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6">
-      <h1 className="mb-1 text-2xl font-bold">Metro Map</h1>
+    <div className="mx-auto w-full max-w-[110rem] px-4 py-6 sm:px-6">
+      <h1 className="mb-1 text-xl tracking-tight">Metro Map</h1>
       <p className="mb-4 text-sm text-muted">
-        Tap a station to plan a trip from it. Grey stations are under construction.
+        Schematic network map. Tap a station to plan a trip from it, drag to pan, scroll to zoom.
+        Dashed grey lines are still under construction.
       </p>
-      <MetroMap />
+      <MetroMapPage />
     </div>
   );
 }

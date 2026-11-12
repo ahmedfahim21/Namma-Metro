@@ -7,6 +7,8 @@
   --muted: #6b7280;
   --border: #e5e7eb;
   --accent: #7b2d8e;
+  --map-bg: #fbfaf7;
+  --map-grid: #ece9e2;
 
   --line-purple: #7b2d8e;
   --line-green: #2e9e4c;
@@ -16,6 +18,7 @@
 }
 
 @theme inline {
+  --color-map-bg: var(--map-bg);
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-foreground: var(--foreground);
@@ -33,6 +36,8 @@
     --foreground: #f2f3f5;
     --muted: #9aa0ab;
     --border: #2a2d34;
+    --map-bg: #101216;
+    --map-grid: #1c1f26;
   }
 }
 
@@ -58,4 +63,24 @@ body {
   height: 0.625rem;
   border-radius: 9999px;
   flex-shrink: 0;
+}
+
+/* Route line drawing itself in when a new itinerary is selected. */
+.route-trace {
+  stroke-dasharray: var(--trace-length);
+  stroke-dashoffset: var(--trace-length);
+  animation: route-trace 900ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes route-trace {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-trace {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
 }

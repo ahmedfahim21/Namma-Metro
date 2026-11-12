@@ -40,8 +40,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ServiceWorkerRegistrar />
         <header className="border-b border-border bg-surface">
-          <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-            <Link href="/" className="flex items-center gap-2 font-semibold text-lg">
+          <div className="mx-auto flex w-full max-w-[110rem] items-center justify-between px-4 py-3 sm:px-6">
+            <Link href="/" className="flex items-center gap-2 text-lg tracking-tight">
               <span
                 aria-hidden
                 className="inline-block h-6 w-6 rounded-md"

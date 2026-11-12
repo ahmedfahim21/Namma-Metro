@@ -8,7 +8,16 @@ import { estimateDepartures, directionIndexForLeg, formatClock } from "@/package
 import { quoteFare } from "@/packages/fares/src/index";
 import { formatDuration, formatDistance, formatCurrency } from "@/lib/format";
 import { StationCombobox } from "./StationCombobox";
-import { LineBadge, lineColor } from "./LineBadge";
+import { lineColor } from "./LineBadge";
+import { MetroMap } from "./MetroMap";
+
+const LINE_LABEL: Record<string, string> = {
+  purple: "Purple Line",
+  green: "Green Line",
+  yellow: "Yellow Line",
+  pink: "Pink Line",
+  blue: "Blue Line",
+};
 
 const LABEL_TEXT: Record<ItineraryLabel, string> = {
   fastest: "Fastest",
@@ -34,7 +43,17 @@ function useOnlineStatus() {
   );
 }
 
-function ItineraryCard({ itinerary, now }: { itinerary: Itinerary; now: Date }) {
+function ItineraryCard({
+  itinerary,
+  now,
+  selected,
+  onSelect,
+}: {
+  itinerary: Itinerary;
+  now: Date;
+  selected: boolean;
+  onSelect: () => void;
+}) {
   const fare = quoteFare(itinerary.totalStops, fareRules, now);
   const firstLeg = itinerary.legs[0];
   const departure = firstLeg
@@ -47,20 +66,36 @@ function ItineraryCard({ itinerary, now }: { itinerary: Itinerary; now: Date }) 
     : null;
 
   return (
-    <div className="rounded-xl border border-border bg-surface p-4">
+    <div
+      role="button"
+      tabIndex={0}
+      aria-pressed={selected}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      className={`cursor-pointer rounded-2xl border bg-surface p-5 transition-all ${
+        selected
+          ? "border-accent/60 shadow-[0_1px_20px_-8px_var(--accent)]"
+          : "border-border opacity-90 hover:border-muted hover:opacity-100"
+      }`}
+    >
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap gap-1.5">
           {itinerary.labels.map((l) => (
             <span
               key={l}
-              className="rounded-full bg-background px-2 py-0.5 text-[11px] font-medium text-muted"
+              className="rounded-full border border-border px-2.5 py-0.5 text-[11px] tracking-wide text-muted"
             >
               {LABEL_TEXT[l]}
             </span>
           ))}
         </div>
         <div className="text-right">
-          <div className="text-lg font-semibold">{formatDuration(itinerary.totalDurationSeconds)}</div>
+          <div className="text-xl tracking-tight">{formatDuration(itinerary.totalDurationSeconds)}</div>
           <div className="text-xs text-muted">
             {itinerary.totalStops} stops · {itinerary.interchanges.length} interchange
             {itinerary.interchanges.length === 1 ? "" : "s"}
@@ -75,11 +110,13 @@ function ItineraryCard({ itinerary, now }: { itinerary: Itinerary; now: Date }) 
           return (
             <li key={i} className="flex items-start gap-3">
               <span
-                className="mt-1 h-3 w-3 flex-shrink-0 rounded-full"
+                className="mt-1.5 h-2.5 w-2.5 flex-shrink-0 rounded-full ring-3 ring-background"
                 style={{ background: lineColor(leg.line) }}
               />
               <div className="flex-1 text-sm">
-                <LineBadge line={leg.line} />
+                <span className="text-xs tracking-wide" style={{ color: lineColor(leg.line) }}>
+                  {LINE_LABEL[leg.line] ?? leg.line}
+                </span>
                 <div className="text-foreground">
                   {board?.name} → {alight?.name}
                 </div>
@@ -162,6 +199,7 @@ export function TripPlanner({
   const [origin, setOrigin] = useState<Station | null>(defaultOrigin ?? null);
   const [destination, setDestination] = useState<Station | null>(defaultDestination ?? null);
   const [now, setNow] = useState<Date | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const online = useOnlineStatus();
 
   useEffect(() => {
@@ -179,33 +217,101 @@ export function TripPlanner({
     return getRouter().planTrip(origin.id, destination.id);
   }, [origin, destination]);
 
+
+  const selected = itineraries.find((it) => it.id === selectedId) ?? itineraries[0] ?? null;
+
+  const mapRoute = selected
+    ? {
+        id: selected.id,
+        legs: selected.legs.map((leg) => ({
+          line: leg.line,
+          boardStation: leg.boardStation,
+          alightStation: leg.alightStation,
+          stations: leg.stations,
+        })),
+        originStation: selected.originStation,
+        destinationStation: selected.destinationStation,
+      }
+    : null;
+
   return (
-    <div className="mx-auto max-w-2xl px-4 py-6">
+    <div className="mx-auto w-full max-w-[110rem] px-4 py-5 sm:px-6">
       {!online && (
         <div className="mb-4 rounded-lg bg-amber-100 px-3 py-2 text-sm text-amber-900 dark:bg-amber-950 dark:text-amber-200">
           Offline — showing cached network data and timetables.
         </div>
       )}
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end">
-        <StationCombobox label="From" value={origin} onChange={setOrigin} />
-        <StationCombobox label="To" value={destination} onChange={setDestination} />
-      </div>
 
-      {origin && destination && origin.id === destination.id && (
-        <p className="text-sm text-muted">Pick two different stations to plan a trip.</p>
-      )}
-
-      {itineraries.length === 0 && origin && destination && origin.id !== destination.id && (
-        <p className="text-sm text-muted">No route found between these stations yet.</p>
-      )}
-
-      {now && (
-        <div className="space-y-4">
-          {itineraries.map((it) => (
-            <ItineraryCard key={it.id} itinerary={it} now={now} />
-          ))}
+      {/* Inputs, map, results — in that reading order on a phone; the map
+          takes the whole right-hand column on a wide screen. */}
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)] lg:grid-rows-[auto_minmax(0,1fr)] xl:gap-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end lg:col-start-1 lg:row-start-1">
+          <StationCombobox label="From" value={origin} onChange={setOrigin} />
+          <StationCombobox label="To" value={destination} onChange={setDestination} />
         </div>
-      )}
+
+        <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:sticky lg:top-4">
+          <div className="mb-2.5 flex items-baseline justify-between gap-3 px-1 text-sm">
+            <span className="truncate tracking-tight">
+              {selected ? (
+                <>
+                  {stationById.get(selected.originStation)?.name}
+                  <span className="mx-2 text-muted">→</span>
+                  {stationById.get(selected.destinationStation)?.name}
+                </>
+              ) : (
+                <span className="text-muted">Bengaluru network</span>
+              )}
+            </span>
+            <span className="flex-shrink-0 text-[11px] tracking-wide text-muted">
+              drag to pan · scroll to zoom
+            </span>
+          </div>
+          <MetroMap
+            route={mapRoute}
+            labelMode={mapRoute ? "route" : "all"}
+            className="h-[26rem] sm:h-[32rem] lg:h-[calc(100vh-11.5rem)]"
+            onStationClick={(station) => {
+              if (!origin || (origin && destination)) {
+                setOrigin(station);
+                setDestination(null);
+              } else {
+                setDestination(station);
+              }
+            }}
+          />
+        </div>
+        <div className="lg:col-start-1 lg:row-start-2 lg:max-h-[calc(100vh-15rem)] lg:overflow-y-auto lg:pr-1">
+          {origin && destination && origin.id === destination.id && (
+            <p className="text-sm text-muted">Pick two different stations to plan a trip.</p>
+          )}
+
+          {itineraries.length === 0 && origin && destination && origin.id !== destination.id && (
+            <p className="text-sm text-muted">No route found between these stations yet.</p>
+          )}
+
+          {!origin || !destination ? (
+            <p className="text-sm text-muted">
+              Pick a start and an end station — the map traces the route as it goes.
+            </p>
+          ) : null}
+
+          {now && (
+            <div className="space-y-4">
+              {itineraries.map((it) => (
+                <ItineraryCard
+                  key={it.id}
+                  itinerary={it}
+                  now={now}
+                  selected={it.id === selected?.id}
+                  onSelect={() => setSelectedId(it.id)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+      </div>
     </div>
   );
 }

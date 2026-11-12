@@ -60,19 +60,19 @@ export default async function RoutePage({ params }: { params: Promise<{ slug: st
           {JSON.stringify(jsonLd)}
         </Script>
       )}
-      <div className="border-b border-border bg-surface">
-        <div className="mx-auto max-w-2xl px-4 pt-8 pb-2">
-          <h1 className="text-2xl font-bold">
+      <div className="mx-auto w-full max-w-[110rem] px-4 pt-6 pb-1 sm:px-6">
+        <div>
+          <h1 className="text-xl tracking-tight">
             {from.name} → {to.name}
           </h1>
           {best && fare ? (
-            <p className="mt-1 text-sm text-muted">
+            <p className="mt-0.5 text-sm text-muted">
               {formatDuration(best.totalDurationSeconds)} · {best.totalStops} stops ·{" "}
               {best.interchanges.length} interchange{best.interchanges.length === 1 ? "" : "s"} · from{" "}
               {formatCurrency(fare.cheapest.fare)}
             </p>
           ) : (
-            <p className="mt-1 text-sm text-muted">No route found between these stations yet.</p>
+            <p className="mt-0.5 text-sm text-muted">No route found between these stations yet.</p>
           )}
         </div>
       </div>

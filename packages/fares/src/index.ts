@@ -21,7 +21,7 @@ export interface PassSuggestion {
 
 export interface FareResult {
   baseFare: number;
-  stopCount: number;
+  distanceMeters: number;
   isPeak: boolean;
   isFullDiscountDay: boolean;
   quotes: FareQuote[];
@@ -43,20 +43,25 @@ function isFullDiscountDate(date: Date, fullDiscountDates: string[]): boolean {
   return isSunday || fullDiscountDates.includes(mmdd);
 }
 
-function tokenFareForStops(stopCount: number, rules: FareRules): number {
-  if (stopCount <= 0) return rules.sameStationFare;
-  const slab = rules.slabs.find((s) => stopCount >= s.minStops && stopCount <= s.maxStops);
-  return slab ? slab.tokenFare : rules.slabs[rules.slabs.length - 1].tokenFare;
+export function tokenFareForDistance(distanceMeters: number, rules: FareRules): number {
+  if (!Number.isFinite(distanceMeters) || distanceMeters < 0) {
+    throw new Error(`Cannot price a trip of ${distanceMeters} m.`);
+  }
+  const km = distanceMeters / 1000;
+  // Bands are ordered and the last one is open-ended, so there is always a match.
+  const band = rules.bands.find((b) => b.maxKm === null || km <= b.maxKm);
+  if (!band) throw new Error("Fare rules have no open-ended final band.");
+  return band.tokenFare;
 }
 
 /**
  * Prices a trip under every BMRCL payment mode and returns the cheapest,
- * plus pass break-even guidance. `at` defaults to now; pass a fixed date in
- * tests for determinism. See data/source/fares.ts for the rule sources —
- * this is a planning estimate, not the official fare chart.
+ * plus pass break-even guidance. `distanceMeters` is the distance travelled
+ * along the track. `at` defaults to now; pass a fixed date in tests for
+ * determinism. See data/source/fares.ts for the rule sources.
  */
-export function quoteFare(stopCount: number, rules: FareRules, at: Date = new Date()): FareResult {
-  const baseFare = tokenFareForStops(stopCount, rules);
+export function quoteFare(distanceMeters: number, rules: FareRules, at: Date = new Date()): FareResult {
+  const baseFare = tokenFareForDistance(distanceMeters, rules);
   const minute = minutesSinceMidnight(at);
   const isFullDiscountDay = isFullDiscountDate(at, rules.fullDiscountDates);
   const isPeak = !isFullDiscountDay && isWithinWindow(minute, rules.peakWindows);
@@ -101,5 +106,5 @@ export function quoteFare(stopCount: number, rules: FareRules, at: Date = new Da
     breakEvenTrips: Math.ceil(p.price / Math.max(1, cheapest.fare)),
   }));
 
-  return { baseFare, stopCount, isPeak, isFullDiscountDay, quotes, cheapest, passes };
+  return { baseFare, distanceMeters, isPeak, isFullDiscountDay, quotes, cheapest, passes };
 }

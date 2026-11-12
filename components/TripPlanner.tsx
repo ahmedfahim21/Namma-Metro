@@ -54,7 +54,7 @@ function ItineraryCard({
   selected: boolean;
   onSelect: () => void;
 }) {
-  const fare = quoteFare(itinerary.totalStops, fareRules, now);
+  const fare = quoteFare(itinerary.totalDistanceMeters, fareRules, now);
   const firstLeg = itinerary.legs[0];
   const departure = firstLeg
     ? estimateDepartures(

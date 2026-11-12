@@ -40,7 +40,7 @@ export default async function RoutePage({ params }: { params: Promise<{ slug: st
 
   const itineraries = getRouter().planTrip(from.id, to.id);
   const best = itineraries[0];
-  const fare = best ? quoteFare(best.totalStops, fareRules) : null;
+  const fare = best ? quoteFare(best.totalDistanceMeters, fareRules) : null;
 
   const jsonLd = best
     ? {

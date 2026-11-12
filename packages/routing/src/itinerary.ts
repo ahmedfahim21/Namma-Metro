@@ -30,7 +30,7 @@ export interface Itinerary {
   totalWalkSeconds: number;
   totalDurationSeconds: number;
   totalDistanceMeters: number;
-  /** Total stops traversed across the whole trip (used for the fare engine). */
+  /** Total stops traversed across the whole trip. */
   totalStops: number;
   originStation: string;
   destinationStation: string;

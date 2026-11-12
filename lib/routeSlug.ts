@@ -1,5 +1,6 @@
 import { stationBySlug, routableStations } from "@/lib/network";
 import type { Station } from "@/packages/network/src/schema";
+import { isInService } from "@/packages/network/src/status";
 
 const SEPARATOR = "-to-";
 
@@ -30,16 +31,24 @@ export function parseRouteSlug(slug: string): { from: Station; to: Station } | n
 
 /** A curated subset of pairs to pre-render at build time (interchanges + terminals). */
 export function popularRoutePairs(): [Station, Station][] {
+  // Terminals are the ends of the track you can ride, not of the line as planned.
   const maxSequenceByLine = new Map<string, number>();
+  const minSequenceByLine = new Map<string, number>();
   for (const s of routableStations) {
-    for (const m of s.lines) {
-      maxSequenceByLine.set(m.line, Math.max(maxSequenceByLine.get(m.line) ?? 0, m.sequence));
+    for (const m of s.lines.filter(isInService)) {
+      maxSequenceByLine.set(m.line, Math.max(maxSequenceByLine.get(m.line) ?? -Infinity, m.sequence));
+      minSequenceByLine.set(m.line, Math.min(minSequenceByLine.get(m.line) ?? Infinity, m.sequence));
     }
   }
   const featured = routableStations.filter(
     (s) =>
       s.interchange ||
-      s.lines.some((m) => m.sequence === 0 || m.sequence === maxSequenceByLine.get(m.line)),
+      s.lines
+        .filter(isInService)
+        .some(
+          (m) =>
+            m.sequence === minSequenceByLine.get(m.line) || m.sequence === maxSequenceByLine.get(m.line),
+        ),
   );
   const pairs: [Station, Station][] = [];
   for (const a of featured) {

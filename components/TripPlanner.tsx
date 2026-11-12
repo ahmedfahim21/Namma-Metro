@@ -10,6 +10,8 @@ import { formatDuration, formatDistance, formatCurrency } from "@/lib/format";
 import { StationCombobox } from "./StationCombobox";
 import { lineColor } from "./LineBadge";
 import { MetroMap } from "./MetroMap";
+import { OpeningChip, useToday } from "./OpeningNote";
+import { formatOpenDate, openState } from "@/packages/network/src/status";
 
 const LINE_LABEL: Record<string, string> = {
   purple: "Purple Line",
@@ -56,6 +58,14 @@ function ItineraryCard({
 }) {
   const fare = quoteFare(itinerary.totalDistanceMeters, fareRules, now);
   const firstLeg = itinerary.legs[0];
+  const today = useToday();
+  // Legs on a stretch whose opening day has been announced but not yet reached.
+  const notYetOpen = today
+    ? itinerary.legs
+        .map((leg) => stationById.get(leg.boardStation)?.lines.find((m) => m.line === leg.line))
+        .filter((m) => m !== undefined && openState(m, today) === "opens_soon")
+    : [];
+  const opensOn = notYetOpen[0]?.openDate;
   const departure = firstLeg
     ? estimateDepartures(
         timetables,
@@ -114,8 +124,13 @@ function ItineraryCard({
                 style={{ background: lineColor(leg.line) }}
               />
               <div className="flex-1 text-sm">
-                <span className="text-xs tracking-wide" style={{ color: lineColor(leg.line) }}>
-                  {LINE_LABEL[leg.line] ?? leg.line}
+                <span className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs tracking-wide" style={{ color: lineColor(leg.line) }}>
+                    {LINE_LABEL[leg.line] ?? leg.line}
+                  </span>
+                  {board?.lines
+                    .filter((m) => m.line === leg.line)
+                    .map((m) => <OpeningChip key={m.line} opening={m} color={lineColor(leg.line)} />)}
                 </span>
                 <div className="text-foreground">
                   {board?.name} → {alight?.name}
@@ -134,20 +149,26 @@ function ItineraryCard({
         <div className="mb-4 rounded-lg bg-background px-3 py-2 text-xs text-muted">
           {itinerary.interchanges.map((ic, i) => (
             <div key={i}>
-              Change at <strong className="text-foreground">{stationById.get(ic.station)?.name}</strong>:{" "}
-              {ic.fromLine} → {ic.toLine} line, ~{Math.round(ic.walkSeconds / 60)} min walk
+              Change at <span className="text-foreground">{stationById.get(ic.station)?.name}</span>:{" "}
+              {LINE_LABEL[ic.fromLine]} to {LINE_LABEL[ic.toLine]}, about {Math.round(ic.walkSeconds / 60)} min
+              walk
             </div>
           ))}
         </div>
       )}
 
-      {departure && (
+      {opensOn && (
+        <div className="mb-4 rounded-lg bg-background px-3 py-2 text-xs text-muted">
+          <span className="text-foreground">Not possible yet.</span> The Pink Line section on this trip
+          opens on {formatOpenDate(opensOn)}.
+        </div>
+      )}
+
+      {departure && !opensOn && (
         <div className="mb-4 text-sm">
           {departure.serviceOpen ? (
             <>
-              <span className="font-medium">
-                Next train ~{Math.round(departure.expectedWaitSeconds / 60)} min
-              </span>
+              <span>Next train in about {Math.round(departure.expectedWaitSeconds / 60)} min</span>
               {departure.nextDepartures.length > 0 && (
                 <span className="text-muted">
                   {" "}
@@ -171,15 +192,18 @@ function ItineraryCard({
             className={`rounded-lg border px-2 py-2 ${q.mode === fare.cheapest.mode ? "border-accent" : "border-border"}`}
           >
             <div className="text-xs text-muted">{q.label}</div>
-            <div className="font-semibold">{formatCurrency(q.fare)}</div>
+            <div className="text-base tracking-tight">{formatCurrency(q.fare)}</div>
             {q.savingsVsToken > 0 && (
               <div className="text-[11px] text-green-600">save {formatCurrency(q.savingsVsToken)}</div>
             )}
           </div>
         ))}
       </div>
+      <div className="mt-2 text-[11px] text-muted">
+        Fare estimated from {formatDistance(itinerary.totalDistanceMeters)} on BMRCL&apos;s distance bands.
+      </div>
       {fare.passes.length > 0 && (
-        <div className="mt-2 text-[11px] text-muted">
+        <div className="mt-1 text-[11px] text-muted">
           {fare.passes
             .map((p) => `${p.label} (${formatCurrency(p.price)}) breaks even after ${p.breakEvenTrips} trips`)
             .join(" · ")}
@@ -298,6 +322,12 @@ export function TripPlanner({
               Pick a start and an end station — the map traces the route as it goes.
             </p>
           ) : null}
+
+          {!now && origin && destination && origin.id !== destination.id && (
+            <div className="space-y-4" aria-busy="true" aria-label="Working out routes">
+              <div className="h-56 animate-pulse rounded-2xl border border-border bg-surface" />
+            </div>
+          )}
 
           {now && (
             <div className="space-y-4">

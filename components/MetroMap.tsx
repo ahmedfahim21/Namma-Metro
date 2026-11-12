@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { LineId, Station } from "@/packages/network/src/schema";
 import {
-  dateInIST,
   formatOpenDate,
   isInService,
   isNewlyOpened,
@@ -39,6 +38,7 @@ import { monthEnd, monthRange, networkAt, openingEvents, stationFirstDates } fro
 import { atSecondsOfDay } from "@/lib/liveTrains";
 import { formatCurrency } from "@/lib/format";
 import { lineColor } from "./LineBadge";
+import { useToday } from "./OpeningNote";
 import { createSimClock } from "./map/simClock";
 import { DayScrubber, LiveReadout, LiveTrainsLayer } from "./map/LiveTrainsLayer";
 
@@ -89,17 +89,6 @@ function usePrefersReducedMotion(): boolean {
     subscribeReducedMotion,
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     () => false,
-  );
-}
-
-const subscribeNever = () => () => {};
-
-/** Today's date in Bengaluru once running in the browser; null while server-rendering. */
-function useToday(): string | null {
-  return useSyncExternalStore(
-    subscribeNever,
-    () => dateInIST(new Date()),
-    () => null,
   );
 }
 
@@ -250,7 +239,8 @@ export function MetroMap({
         22,
       );
     }
-    return frameBox(target.bounds, aspect, 46);
+    // Room around the edge for terminal names and the legend along the bottom.
+    return frameBox(target.bounds, aspect, 88);
   }, [radial, target, aspect]);
 
   const [view, setView] = useState<View>(fullView);

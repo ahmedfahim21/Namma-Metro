@@ -9,6 +9,7 @@ import {
   openState,
 } from "@/packages/network/src/status";
 import { searchStations, routableStations, routableSegments } from "@/lib/network";
+import { buildRouteSlug, parseRouteSlug, popularRoutePairs } from "@/lib/routeSlug";
 
 const stations = network.stations as Station[];
 const segments = network.segments as Segment[];
@@ -180,5 +181,33 @@ describe("opening status", () => {
   it("formats opening dates", () => {
     expect(formatOpenDate("2026-11-14")).toBe("14 Nov 2026");
     expect(formatOpenDate("2026-11-14", false)).toBe("14 Nov");
+  });
+});
+
+describe("route pages", () => {
+  it("pre-renders trips between the interchanges and the ends of the open track", () => {
+    const featured = [...new Set(popularRoutePairs().flatMap(([a, b]) => [a.name, b.name]))].sort();
+    expect(featured).toEqual([
+      "Challaghatta",
+      "Delta Electronics Bommasandra",
+      "Jayadeva Hospital",
+      "Kalena Agrahara",
+      "Madavara",
+      "Nadaprabhu Kempegowda Station, Majestic",
+      "Rashtreeya Vidyalaya Road",
+      "Silk Institute",
+      "Tavarekere",
+      "Whitefield (Kadugodi)",
+    ]);
+    expect(popularRoutePairs()).toHaveLength(90);
+  });
+
+  it("round-trips every station pair through its URL slug", () => {
+    for (const [from, to] of popularRoutePairs()) {
+      const parsed = parseRouteSlug(buildRouteSlug(from, to));
+      expect(parsed?.from.id).toBe(from.id);
+      expect(parsed?.to.id).toBe(to.id);
+    }
+    expect(parseRouteSlug("nowhere-to-nothing")).toBeNull();
   });
 });

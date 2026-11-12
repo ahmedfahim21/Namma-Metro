@@ -7,7 +7,8 @@ export function MetroMapPage() {
   const router = useRouter();
   return (
     <MetroMap
-      className="h-[calc(100vh-12rem)] min-h-[30rem]"
+      explore
+      className="h-[calc(100dvh-11rem)] min-h-[34rem]"
       onStationClick={(station) => router.push(`/station/${station.slug}`)}
     />
   );

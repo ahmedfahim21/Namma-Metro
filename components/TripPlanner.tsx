@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { Station } from "@/packages/network/src/schema";
-import { getRouter, stationById, fareRules, timetables, sequenceOf } from "@/lib/network";
+import { getRouter, stationById, fareRules, timetables, sequenceOf, isRoutable } from "@/lib/network";
 import type { Itinerary, ItineraryLabel } from "@/packages/routing/src/itinerary";
 import { estimateDepartures, directionIndexForLeg, formatClock } from "@/packages/routing/src/departures";
 import { quoteFare } from "@/packages/fares/src/index";
@@ -271,7 +271,10 @@ export function TripPlanner({
             route={mapRoute}
             labelMode={mapRoute ? "route" : "all"}
             className="h-[26rem] sm:h-[32rem] lg:h-[calc(100vh-11.5rem)]"
+            ambientTrains
             onStationClick={(station) => {
+              // Stations on a stretch that is still being built cannot start or end a trip.
+              if (!isRoutable(station)) return;
               if (!origin || (origin && destination)) {
                 setOrigin(station);
                 setDestination(null);

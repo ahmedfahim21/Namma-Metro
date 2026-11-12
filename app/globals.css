@@ -9,6 +9,9 @@
   --accent: #7b2d8e;
   --map-bg: #fbfaf7;
   --map-grid: #ece9e2;
+  --map-ring: #dcd8cf;
+  /* Laid over a train so it reads darker than the line it runs on. */
+  --train-shade: rgb(0 0 0 / 0.28);
 
   --line-purple: #7b2d8e;
   --line-green: #2e9e4c;
@@ -38,6 +41,10 @@
     --border: #2a2d34;
     --map-bg: #101216;
     --map-grid: #1c1f26;
+    --map-ring: #2b303a;
+    --train-shade: rgb(255 255 255 / 0.3);
+    --line-purple: #b574c6;
+    --line-yellow: #e3b417;
   }
 }
 
@@ -54,7 +61,6 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  font-weight: 600;
   font-size: 0.8125rem;
 }
 
@@ -78,9 +84,48 @@ body {
   }
 }
 
+/* A stretch of line appearing on the growth timeline: drawn from one end to the other. */
+.line-draw-in {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: route-trace 700ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.map-fade-in {
+  animation: map-fade-in 500ms ease-out both;
+}
+
+@keyframes map-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Soft breathing halo behind a stretch that is about to open or has just opened. */
+.line-halo {
+  opacity: 0.14;
+  animation: line-halo 2.6s ease-in-out infinite;
+}
+
+@keyframes line-halo {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.map-range {
+  accent-color: var(--accent);
+  height: 1.25rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .route-trace {
+  .route-trace,
+  .line-draw-in {
     animation: none;
     stroke-dashoffset: 0;
+  }
+  .map-fade-in,
+  .line-halo {
+    animation: none;
   }
 }

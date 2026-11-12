@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  frameFromPositions,
+  mapLabel,
+  poseBetween,
+  schematicFrame,
+  styleRuns,
+  tweenFrame,
   createTrainTimeline,
   cumulativeLengths,
   getMapLayout,
@@ -188,5 +194,139 @@ describe("train timeline", () => {
     const end = timeline.at(timeline.cycle - 1);
     expect(end.x).toBeCloseTo(points[points.length - 1].x, 6);
     expect(end.y).toBeCloseTo(points[points.length - 1].y, 6);
+  });
+});
+
+describe("frames", () => {
+  const schematic = schematicFrame(layout);
+  const geographic = frameFromPositions(layout, layout.geo);
+
+  it("gives every station a geographic position inside the canvas", () => {
+    expect(layout.geo.size).toBe(stations.length);
+    for (const [id, p] of layout.geo) {
+      expect(p.x, id).toBeGreaterThanOrEqual(0);
+      expect(p.x, id).toBeLessThanOrEqual(layout.width);
+      expect(p.y, id).toBeGreaterThanOrEqual(0);
+      expect(p.y, id).toBeLessThanOrEqual(layout.height);
+    }
+  });
+
+  it("keeps north up and east right in the geographic arrangement", () => {
+    const at = (name: string) => layout.geo.get(stations.find((s) => s.name === name)!.id)!;
+    expect(at("Madavara").y).toBeLessThan(at("Silk Institute").y);
+    expect(at("Challaghatta").x).toBeLessThan(at("Whitefield (Kadugodi)").x);
+    expect(at("Nagawara").y).toBeLessThan(at("Kalena Agrahara").y);
+  });
+
+  it("re-draws lines with the same vertices, so the two arrangements can blend", () => {
+    expect(geographic.geometries.map((g) => g.points.length)).toEqual(
+      schematic.geometries.map((g) => g.points.length),
+    );
+    for (const geometry of geographic.geometries) {
+      for (const point of geometry.points) {
+        if (point.stationId) expect(point).toMatchObject(layout.geo.get(point.stationId)!);
+        else expect(point.bend).toBeDefined();
+      }
+    }
+  });
+
+  it("carries each bend along on the straight line between its two stations", () => {
+    for (const geometry of geographic.geometries) {
+      for (const point of geometry.points) {
+        if (!point.bend) continue;
+        const a = layout.geo.get(point.bend.from)!;
+        const b = layout.geo.get(point.bend.to)!;
+        expect(point.bend.t).toBeGreaterThan(0);
+        expect(point.bend.t).toBeLessThan(1);
+        expect(point.x).toBeCloseTo(a.x + (b.x - a.x) * point.bend.t, 6);
+        expect(point.y).toBeCloseTo(a.y + (b.y - a.y) * point.bend.t, 6);
+      }
+    }
+  });
+
+  it("blends from one arrangement to the other", () => {
+    expect(tweenFrame(schematic, geographic, 0)).toBe(schematic);
+    expect(tweenFrame(schematic, geographic, 1)).toBe(geographic);
+    const half = tweenFrame(schematic, geographic, 0.5);
+    for (const [id, p] of half.positions) {
+      const a = schematic.positions.get(id)!;
+      const b = geographic.positions.get(id)!;
+      expect(p.x, id).toBeCloseTo((a.x + b.x) / 2, 6);
+      expect(p.y, id).toBeCloseTo((a.y + b.y) / 2, 6);
+    }
+  });
+
+  it("fails loudly when an arrangement is missing a station", () => {
+    expect(() => frameFromPositions(layout, new Map())).toThrow();
+  });
+});
+
+describe("styleRuns", () => {
+  const pink = layout.geometries.find((g) => g.line === "pink")!;
+
+  it("splits the Pink Line where the open track ends", () => {
+    const open = new Set(["kalena-agrahara", "hulimavu", "iimb", "jp-nagar-4th-phase", "jayadeva-hospital"]);
+    const runs = styleRuns(pink, (from) => (open.has(from) ? "open" : "planned"));
+    expect(runs.map((r) => [r.key, r.from, r.to])).toEqual([
+      ["open", "kalena-agrahara", "tavarekere"],
+      ["planned", "tavarekere", "nagawara"],
+    ]);
+    // The two stretches meet at Tavarekere and together cover the whole line.
+    expect(runs[0].points[runs[0].points.length - 1]).toEqual(runs[1].points[0]);
+    expect(runs[0].points.length + runs[1].points.length - 1).toBe(pink.points.length);
+  });
+
+  it("keeps a line whole when every hop is drawn alike", () => {
+    const runs = styleRuns(pink, () => "same");
+    expect(runs).toHaveLength(1);
+    expect(runs[0].points).toHaveLength(pink.points.length);
+  });
+});
+
+describe("poseBetween", () => {
+  const pink = layout.geometries.find((g) => g.line === "pink")!;
+
+  it("starts at one station and ends at the next", () => {
+    const start = poseBetween(pink, "hulimavu", "iimb", 0)!;
+    const end = poseBetween(pink, "hulimavu", "iimb", 1)!;
+    expect(start).toMatchObject(layout.positions.get("hulimavu")!);
+    expect(end.x).toBeCloseTo(layout.positions.get("iimb")!.x, 6);
+    expect(end.y).toBeCloseTo(layout.positions.get("iimb")!.y, 6);
+  });
+
+  it("faces the opposite way when travelling in the other direction", () => {
+    const north = poseBetween(pink, "hulimavu", "iimb", 0.5)!;
+    const south = poseBetween(pink, "iimb", "hulimavu", 0.5)!;
+    expect(Math.abs(Math.abs(north.angle - south.angle) - 180)).toBeLessThan(0.01);
+    expect(north.x).toBeCloseTo(south.x, 6);
+  });
+
+  it("returns nothing for a station that is not on the line", () => {
+    expect(poseBetween(pink, "hulimavu", "indiranagar", 0.5)).toBeNull();
+  });
+});
+
+describe("mapLabel", () => {
+  const named = (name: string) => stations.find((s) => s.name === name)!;
+
+  it("uses the everyday name when the official one is too long for the map", () => {
+    expect(mapLabel(named("Nadaprabhu Kempegowda Station, Majestic"))).toBe("Majestic");
+    expect(mapLabel(named("Rashtreeya Vidyalaya Road"))).toBe("RV Road");
+    expect(mapLabel(named("Indiranagar"))).toBe("Indiranagar");
+    expect(mapLabel(named("Whitefield (Kadugodi)"))).toBe("Whitefield (Kadugodi)");
+  });
+
+  it("chooses a side for every interchange and terminal label", () => {
+    for (const name of ["Jayadeva Hospital", "Rashtreeya Vidyalaya Road", "Kalena Agrahara", "Nagawara"]) {
+      expect(["right", "left", "above", "below"], name).toContain(layout.labels.get(named(name).id));
+      expect(["right", "left", "above", "below"], name).toContain(layout.geoLabels.get(named(name).id));
+    }
+    // Two interchanges a few stops apart must not print over each other.
+    const rv = layout.positions.get(named("Rashtreeya Vidyalaya Road").id)!;
+    const jayadeva = layout.positions.get(named("Jayadeva Hospital").id)!;
+    const sameRow = Math.abs(rv.y - jayadeva.y) < 14;
+    if (sameRow && layout.labels.get(named("Rashtreeya Vidyalaya Road").id) === "right") {
+      expect(jayadeva.x - rv.x).toBeGreaterThan(mapLabel(named("Rashtreeya Vidyalaya Road")).length * 6.4);
+    }
   });
 });

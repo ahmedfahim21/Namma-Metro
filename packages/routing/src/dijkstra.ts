@@ -111,3 +111,39 @@ export function shortestPath(
 
   return null;
 }
+
+/**
+ * Single-source Dijkstra to everywhere: the lowest cost to reach every node
+ * from any of `sources`, plus the step taken to arrive at it.
+ */
+export function shortestTree(
+  graph: Graph,
+  sources: LineNode[],
+  weight: WeightFn,
+): { cost: Map<string, number>; arrivedBy: Map<string, PathStep> } {
+  const cost = new Map<string, number>();
+  const arrivedBy = new Map<string, PathStep>();
+  const heap = new MinHeap<LineNode>();
+  for (const s of sources) {
+    cost.set(nodeKey(s), 0);
+    heap.push(0, s);
+  }
+  const visited = new Set<string>();
+  while (heap.size > 0) {
+    const current = heap.pop()!;
+    const currentKey = nodeKey(current);
+    if (visited.has(currentKey)) continue;
+    visited.add(currentKey);
+    const currentCost = cost.get(currentKey) ?? Infinity;
+    for (const edge of graph.adjacency.get(currentKey) ?? []) {
+      const toKey = nodeKey(edge.to);
+      const next = currentCost + weight(edge);
+      if (next < (cost.get(toKey) ?? Infinity)) {
+        cost.set(toKey, next);
+        arrivedBy.set(toKey, { node: current, edge });
+        heap.push(next, edge.to);
+      }
+    }
+  }
+  return { cost, arrivedBy };
+}

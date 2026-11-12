@@ -18,15 +18,27 @@ export interface LayoutPoint {
   y: number;
   /** Set when this vertex is a station rather than a bend in the line. */
   stationId?: string;
+  /**
+   * Set on a bend: the stations either side of it and how far between them it
+   * sits (0–1). Lets the bend follow its stations when they move to another
+   * arrangement, e.g. geographic or travel-time.
+   */
+  bend?: { from: string; to: string; t: number };
 }
 
 export interface LineGeometry {
   line: LineId;
-  status: Line["status"];
   points: LayoutPoint[];
 }
 
-export type LabelPlacement = "right" | "left" | "diagonal";
+/** One arrangement of the network: where each station is and how each line runs. */
+export interface MapFrame {
+  positions: Map<string, Pt>;
+  geometries: LineGeometry[];
+  bounds: { minX: number; minY: number; maxX: number; maxY: number };
+}
+
+export type LabelPlacement = "right" | "left" | "above" | "below" | "diagonal";
 
 export interface MapLayout {
   width: number;
@@ -37,6 +49,10 @@ export interface MapLayout {
   geometries: LineGeometry[];
   /** Where a station's name should sit relative to its dot. */
   labels: Map<string, LabelPlacement>;
+  /** True geographic positions (equirectangular), fitted to the same canvas. */
+  geo: Map<string, { x: number; y: number }>;
+  /** Label sides for interchanges and terminals when drawn at their geographic positions. */
+  geoLabels: Map<string, LabelPlacement>;
 }
 
 const WIDTH = 1000;
@@ -44,7 +60,7 @@ const HEIGHT = 820;
 const PADDING = 64;
 const EPS = 1e-6;
 
-type Pt = { x: number; y: number };
+export type Pt = { x: number; y: number };
 
 function distance(a: Pt, b: Pt): number {
   return Math.hypot(b.x - a.x, b.y - a.y);
@@ -126,6 +142,15 @@ function corners(points: Pt[]): number[] {
   return found;
 }
 
+/**
+ * The name to print beside a station on the map. Official names can run to
+ * fifty characters ("Sri Balagangadharanatha Swamiji Station, Hosahalli"), so
+ * long ones fall back to the everyday name people use for the place.
+ */
+export function mapLabel(station: Station): string {
+  return station.name.length > 24 && station.aliases.length > 0 ? station.aliases[0] : station.name;
+}
+
 function labelPlacement(before: Pt | undefined, at: Pt, after: Pt | undefined): LabelPlacement {
   const from = before ?? at;
   const to = after ?? at;
@@ -135,6 +160,65 @@ function labelPlacement(before: Pt | undefined, at: Pt, after: Pt | undefined): 
   // Vertical runs have room for a plain horizontal label beside the dot;
   // horizontal and diagonal runs would collide, so those names go on a slant.
   return dy > dx * 1.5 ? "right" : "diagonal";
+}
+
+/**
+ * Interchanges and terminals are labelled at every zoom, so their names get
+ * the clearest of the four sides: away from the lines and from each other.
+ */
+function prominentLabels(
+  stations: Station[],
+  positions: Map<string, Pt>,
+  geometries: LineGeometry[],
+): Map<string, LabelPlacement> {
+  const labels = new Map<string, LabelPlacement>();
+  const samples: Pt[] = [];
+  for (const geometry of geometries) {
+    for (let i = 1; i < geometry.points.length; i++) {
+      const a = geometry.points[i - 1];
+      const b = geometry.points[i];
+      const steps = Math.max(1, Math.ceil(distance(a, b) / 5));
+      for (let k = 0; k <= steps; k++) {
+        samples.push({ x: a.x + ((b.x - a.x) * k) / steps, y: a.y + ((b.y - a.y) * k) / steps });
+      }
+    }
+  }
+  const placed: { x0: number; y0: number; x1: number; y1: number }[] = [];
+  const prominent = stations.filter(
+    (s) =>
+      s.interchange ||
+      geometries.some(
+        (g) => g.points[0].stationId === s.id || g.points[g.points.length - 1].stationId === s.id,
+      ),
+  );
+  for (const station of prominent) {
+    const p = positions.get(station.id)!;
+    const width = mapLabel(station).length * 6.4 + 6;
+    const boxes: [LabelPlacement, { x0: number; y0: number; x1: number; y1: number }][] = [
+      ["right", { x0: p.x + 10, y0: p.y - 8, x1: p.x + 12 + width, y1: p.y + 8 }],
+      ["left", { x0: p.x - 12 - width, y0: p.y - 8, x1: p.x - 10, y1: p.y + 8 }],
+      ["above", { x0: p.x - width / 2, y0: p.y - 28, x1: p.x + width / 2, y1: p.y - 11 }],
+      ["below", { x0: p.x - width / 2, y0: p.y + 11, x1: p.x + width / 2, y1: p.y + 28 }],
+    ];
+    let best = boxes[0];
+    let bestScore = Infinity;
+    for (const candidate of boxes) {
+      const box = candidate[1];
+      const onLine = samples.filter((q) => q.x > box.x0 && q.x < box.x1 && q.y > box.y0 && q.y < box.y1).length;
+      const onLabel = placed.filter(
+        (o) => box.x0 < o.x1 && box.x1 > o.x0 && box.y0 < o.y1 && box.y1 > o.y0,
+      ).length;
+      const score = onLine + onLabel * 200;
+      if (score < bestScore) {
+        bestScore = score;
+        best = candidate;
+      }
+    }
+    labels.set(station.id, best[0]);
+    placed.push(best[1]);
+  }
+
+  return labels;
 }
 
 export function buildLayout(stations: Station[], lines: Line[]): MapLayout {
@@ -198,19 +282,40 @@ export function buildLayout(stations: Station[], lines: Line[]): MapLayout {
       const bendLengths =
         poly.length === 3 ? [distance(poly[0], poly[1])] : [];
       const stops = between.map((s, i) => ({ s: spacing * (i + 1), stationId: s.id }));
-      const vertices = [...stops, ...bendLengths.map((s) => ({ s, stationId: undefined }))].sort(
-        (p, q) => p.s - q.s,
-      );
+      const vertices = [
+        ...stops,
+        ...bendLengths.map((s) => ({ s, stationId: undefined as string | undefined })),
+      ].sort((p, q) => p.s - q.s);
+      // Every station on the run with its arc length, so a bend knows its neighbours.
+      const marks = [
+        { s: 0, stationId: onLine[startIndex].id },
+        ...stops,
+        { s: total, stationId: onLine[endIndex].id },
+      ];
 
       for (const vertex of vertices) {
         const p = pointAtLength(poly, vertex.s);
-        if (vertex.stationId) positions.set(vertex.stationId, p);
-        points.push({ ...p, stationId: vertex.stationId });
+        if (vertex.stationId) {
+          positions.set(vertex.stationId, p);
+          points.push({ ...p, stationId: vertex.stationId });
+          continue;
+        }
+        const next = marks.findIndex((m) => m.s > vertex.s);
+        const before = marks[next - 1];
+        const after = marks[next];
+        points.push({
+          ...p,
+          bend: {
+            from: before.stationId,
+            to: after.stationId,
+            t: (vertex.s - before.s) / (after.s - before.s),
+          },
+        });
       }
       points.push({ ...b, stationId: onLine[endIndex].id });
     }
 
-    geometries.push({ line: line.id, status: line.status, points });
+    geometries.push({ line: line.id, points });
   }
 
   // Fit everything into the canvas.
@@ -233,7 +338,7 @@ export function buildLayout(stations: Station[], lines: Line[]): MapLayout {
 
   for (const [id, p] of positions) positions.set(id, toCanvas(p));
   for (const geometry of geometries) {
-    geometry.points = geometry.points.map((p) => ({ ...toCanvas(p), stationId: p.stationId }));
+    geometry.points = geometry.points.map((p) => ({ ...p, ...toCanvas(p) }));
   }
 
   const labels = new Map<string, LabelPlacement>();
@@ -241,11 +346,14 @@ export function buildLayout(stations: Station[], lines: Line[]): MapLayout {
     geometry.points.forEach((p, i) => {
       if (!p.stationId) return;
       const station = byId.get(p.stationId);
-      // An interchange is drawn once; the first line to claim it wins.
-      if (labels.has(p.stationId) && !station?.interchange) return;
+      // A shared station is drawn once; the first line to claim it wins.
+      if (labels.has(p.stationId)) return;
+      if (!station) return;
       labels.set(p.stationId, labelPlacement(geometry.points[i - 1], p, geometry.points[i + 1]));
     });
   }
+
+  for (const [id, placement] of prominentLabels(stations, positions, geometries)) labels.set(id, placement);
 
   const drawn = geometries.flatMap((g) => g.points);
   const bounds = {
@@ -255,7 +363,147 @@ export function buildLayout(stations: Station[], lines: Line[]): MapLayout {
     maxY: Math.max(...drawn.map((p) => p.y)),
   };
 
-  return { width: WIDTH, height: HEIGHT, bounds, positions, geometries, labels };
+  // The same stations at their true positions, fitted to the canvas on their own terms.
+  const rawAll = stations.map((s) => raw.get(s.id)!);
+  const gMinX = Math.min(...rawAll.map((p) => p.x));
+  const gMaxX = Math.max(...rawAll.map((p) => p.x));
+  const gMinY = Math.min(...rawAll.map((p) => p.y));
+  const gMaxY = Math.max(...rawAll.map((p) => p.y));
+  const gScale = Math.min(
+    (WIDTH - 2 * PADDING) / (gMaxX - gMinX || 1),
+    (HEIGHT - 2 * PADDING) / (gMaxY - gMinY || 1),
+  );
+  const gOffsetX = PADDING + (WIDTH - 2 * PADDING - (gMaxX - gMinX) * gScale) / 2;
+  const gOffsetY = PADDING + (HEIGHT - 2 * PADDING - (gMaxY - gMinY) * gScale) / 2;
+  const geo = new Map<string, Pt>(
+    stations.map((s) => {
+      const p = raw.get(s.id)!;
+      return [s.id, { x: gOffsetX + (p.x - gMinX) * gScale, y: gOffsetY + (p.y - gMinY) * gScale }];
+    }),
+  );
+
+  const layout: MapLayout = {
+    width: WIDTH,
+    height: HEIGHT,
+    bounds,
+    positions,
+    geometries,
+    labels,
+    geo,
+    geoLabels: new Map(),
+  };
+  layout.geoLabels = prominentLabels(stations, geo, frameFromPositions(layout, geo).geometries);
+  return layout;
+}
+
+// ---------------------------------------------------------------------------
+// Frames: the same network in different arrangements, and moving between them
+// ---------------------------------------------------------------------------
+
+function boundsOf(points: Pt[]): MapFrame["bounds"] {
+  return {
+    minX: Math.min(...points.map((p) => p.x)),
+    minY: Math.min(...points.map((p) => p.y)),
+    maxX: Math.max(...points.map((p) => p.x)),
+    maxY: Math.max(...points.map((p) => p.y)),
+  };
+}
+
+/** The tidy diagram, exactly as laid out. */
+export function schematicFrame(layout: MapLayout): MapFrame {
+  return { positions: layout.positions, geometries: layout.geometries, bounds: layout.bounds };
+}
+
+/**
+ * Re-draws the network with its stations at `positions`. Lines keep the same
+ * vertices as the schematic (so the two can be blended), with each bend carried
+ * along between the two stations it sits between.
+ */
+export function frameFromPositions(layout: MapLayout, positions: Map<string, Pt>): MapFrame {
+  const at = (id: string): Pt => {
+    const p = positions.get(id);
+    if (!p) throw new Error(`No position for station "${id}" in this arrangement.`);
+    return p;
+  };
+  const geometries = layout.geometries.map((geometry) => ({
+    line: geometry.line,
+    points: geometry.points.map((point): LayoutPoint => {
+      if (point.stationId) return { ...at(point.stationId), stationId: point.stationId };
+      const { from, to, t } = point.bend!;
+      const a = at(from);
+      const b = at(to);
+      return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, bend: point.bend };
+    }),
+  }));
+  return { positions, geometries, bounds: boundsOf([...positions.values()]) };
+}
+
+/** Blend of two frames of the same layout; `k` runs 0 (all `a`) to 1 (all `b`). */
+export function tweenFrame(a: MapFrame, b: MapFrame, k: number): MapFrame {
+  if (k <= 0) return a;
+  if (k >= 1) return b;
+  const mix = (p: Pt, q: Pt): Pt => ({ x: p.x + (q.x - p.x) * k, y: p.y + (q.y - p.y) * k });
+  const positions = new Map<string, Pt>();
+  for (const [id, p] of a.positions) positions.set(id, mix(p, b.positions.get(id) ?? p));
+  const geometries = a.geometries.map((geometry, g) => ({
+    line: geometry.line,
+    points: geometry.points.map((p, i) => ({ ...p, ...mix(p, b.geometries[g].points[i]) })),
+  }));
+  return { positions, geometries, bounds: boundsOf([...positions.values()]) };
+}
+
+/**
+ * Splits a line into stretches that should be drawn alike. `keyOf` names the
+ * style of the hop between two neighbouring stations; consecutive hops with the
+ * same key become one stretch, bends included.
+ */
+export function styleRuns(
+  geometry: LineGeometry,
+  keyOf: (fromStation: string, toStation: string) => string,
+): { key: string; from: string; to: string; points: Pt[] }[] {
+  const runs: { key: string; from: string; to: string; points: Pt[] }[] = [];
+  let lastStation = -1;
+  geometry.points.forEach((point, i) => {
+    if (!point.stationId) return;
+    if (lastStation >= 0) {
+      const from = geometry.points[lastStation].stationId!;
+      const key = keyOf(from, point.stationId);
+      const hop = geometry.points.slice(lastStation, i + 1).map((p) => ({ x: p.x, y: p.y }));
+      const current = runs[runs.length - 1];
+      if (current && current.key === key) {
+        current.points.push(...hop.slice(1));
+        current.to = point.stationId;
+      } else {
+        runs.push({ key, from, to: point.stationId, points: hop });
+      }
+    }
+    lastStation = i;
+  });
+  return runs;
+}
+
+/** Where something `progress` (0–1) of the way from one station to the next sits, and which way it faces. */
+export function poseBetween(
+  geometry: LineGeometry,
+  fromStation: string,
+  toStation: string,
+  progress: number,
+): { x: number; y: number; angle: number } | null {
+  const points = legPolyline(geometry, fromStation, toStation);
+  if (points.length < 2) return null;
+  const lengths = cumulativeLengths(points);
+  const target = lengths[lengths.length - 1] * Math.max(0, Math.min(1, progress));
+  let i = 1;
+  while (i < lengths.length - 1 && lengths[i] < target) i++;
+  const span = lengths[i] - lengths[i - 1];
+  const t = span < EPS ? 0 : (target - lengths[i - 1]) / span;
+  const a = points[i - 1];
+  const b = points[i];
+  return {
+    x: a.x + (b.x - a.x) * t,
+    y: a.y + (b.y - a.y) * t,
+    angle: (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI,
+  };
 }
 
 /** Smallest view of `box` that keeps `aspect` and leaves `pad` around it. */

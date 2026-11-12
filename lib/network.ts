@@ -24,6 +24,19 @@ export const routableStations = stations.filter(isRoutable);
 // Tavarekere) are drawn on the map but must never be usable as a through-route.
 export const routableSegments = segments.filter(isInService);
 
+const segmentIndex = new Map<string, Segment>();
+for (const segment of segments) {
+  segmentIndex.set(`${segment.line}:${segment.from}:${segment.to}`, segment);
+  segmentIndex.set(`${segment.line}:${segment.to}:${segment.from}`, segment);
+}
+
+/** The segment joining two neighbouring stations of a line, in either direction. */
+export function segmentBetween(line: string, a: string, b: string): Segment {
+  const segment = segmentIndex.get(`${line}:${a}:${b}`);
+  if (!segment) throw new Error(`No ${line} segment between "${a}" and "${b}".`);
+  return segment;
+}
+
 let cachedRouter: ReturnType<typeof createRouter> | null = null;
 export function getRouter() {
   if (!cachedRouter) cachedRouter = createRouter(stations, routableSegments);

@@ -12,6 +12,7 @@
     "build:data": "tsx scripts/build-network.ts",
     "validate:data": "tsx scripts/build-network.ts",
     "build:feeders": "tsx scripts/build-feeders.ts",
+    "import:osm": "tsx scripts/import-osm.ts",
     "pretest": "pnpm run build:data",
     "test": "vitest run",
     "test:watch": "vitest"

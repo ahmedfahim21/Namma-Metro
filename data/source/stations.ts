@@ -1,25 +1,32 @@
 /**
- * Curated Namma Metro network topology, v1.
+ * Curated Namma Metro network topology.
  *
- * Station lists and interchange points are assembled from public sources
- * (BMRCL announcements, Wikipedia station/line articles, and metro-tracking
- * sites) current to September 2026 — see ../../data/SOURCES.md for the full
- * citation log and known gaps. Coordinates are geographic estimates
- * (`coordConfidence: "approximate"`) placed by interpolating between a
- * handful of anchor points per line; they are good enough for "nearest
- * station" search but are NOT survey-grade. Segment run times are modelled
- * from published line lengths / average commercial speed, not measured
- * per-segment timings — see SOURCES.md.
+ * Station order, names, section opening dates and interchanges are assembled
+ * from public sources (BMRCL announcements, Wikipedia's line and station-list
+ * articles, press coverage of each opening) current to November 2026 — see
+ * ../SOURCES.md for the citation log and known gaps.
+ *
+ * Coordinates are NOT authored here: they are imported from OpenStreetMap by
+ * `scripts/import-osm.ts` into `./coords.ts`, keyed by the station names
+ * below.
  */
 
 export type LineId = "purple" | "green" | "yellow" | "pink" | "blue";
 export type LineStatus = "operational" | "opening_soon" | "under_construction";
 
-export interface Anchor {
-  /** 0-based index into the line's station list */
-  index: number;
-  lat: number;
-  lng: number;
+/**
+ * A contiguous stretch of a line that opened (or will open) together.
+ * `from` and `to` are station names, inclusive, in line order. Sections share
+ * their boundary station, which takes the earlier section's status and date.
+ */
+export interface SectionDef {
+  from: string;
+  to: string;
+  status: LineStatus;
+  /** First day of passenger service, YYYY-MM-DD (IST). */
+  openDate?: string;
+  /** Target for sections without a firm date. */
+  expected?: string;
 }
 
 export interface LineDef {
@@ -27,22 +34,26 @@ export interface LineDef {
   name: string;
   nameKn?: string;
   color: string;
-  status: LineStatus;
+  /** Published route length, terminal to terminal, including unopened sections. */
+  lengthKm: number;
   /** Ordered station names, terminal to terminal. */
   stations: string[];
-  anchors: Anchor[];
+  sections: SectionDef[];
+  /** Stations whose platforms on this line are below ground. Everything else is elevated. */
+  underground: string[];
+  atGrade?: string[];
   source: string;
 }
 
 // ---------------------------------------------------------------------------
-// Purple Line — Challaghatta <-> Whitefield (Kadugodi). Fully operational.
+// Purple Line — Challaghatta <-> Whitefield (Kadugodi). 37 stations.
 // ---------------------------------------------------------------------------
 export const purple: LineDef = {
   id: "purple",
   name: "Purple Line",
   nameKn: "ನೇರಳೆ ಮಾರ್ಗ",
   color: "#7B2D8E",
-  status: "operational",
+  lengthKm: 43.49,
   stations: [
     "Challaghatta",
     "Kengeri",
@@ -50,12 +61,12 @@ export const purple: LineDef = {
     "Pattanagere",
     "Jnanabharathi",
     "Rajarajeshwari Nagar",
-    "Nayandahalli",
+    "Pantharapalya - Nayandahalli",
     "Mysuru Road",
     "Deepanjali Nagar",
     "Attiguppe",
     "Vijayanagar",
-    "Hosahalli",
+    "Sri Balagangadharanatha Swamiji Station, Hosahalli",
     "Magadi Road",
     "Krantivira Sangolli Rayanna Railway Station",
     "Nadaprabhu Kempegowda Station, Majestic",
@@ -76,42 +87,46 @@ export const purple: LineDef = {
     "Seetharamapalya",
     "Kundalahalli",
     "Nallurhalli",
+    "Sri Sathya Sai Hospital",
     "Pattandur Agrahara",
     "Kadugodi Tree Park",
     "Hopefarm Channasandra",
     "Whitefield (Kadugodi)",
   ],
-  anchors: [
-    { index: 0, lat: 12.9075, lng: 77.4832 }, // Challaghatta
-    { index: 1, lat: 12.9105, lng: 77.4823 }, // Kengeri
-    { index: 6, lat: 12.9459, lng: 77.5354 }, // Nayandahalli
-    { index: 7, lat: 12.9508, lng: 77.5432 }, // Mysuru Road
-    { index: 10, lat: 12.9719, lng: 77.5392 }, // Vijayanagar
-    { index: 13, lat: 12.9767, lng: 77.5658 }, // KSR City Railway Station
-    { index: 14, lat: 12.9767, lng: 77.5713 }, // Majestic
-    { index: 18, lat: 12.9757, lng: 77.6069 }, // MG Road
-    { index: 21, lat: 12.9784, lng: 77.6408 }, // Indiranagar
-    { index: 23, lat: 12.9905, lng: 77.6547 }, // Baiyappanahalli
-    { index: 25, lat: 12.9944, lng: 77.6970 }, // Krishnarajapura (KR Puram)
-    { index: 35, lat: 12.9931, lng: 77.75 }, // Whitefield (Kadugodi)
+  sections: [
+    { from: "Challaghatta", to: "Kengeri", status: "operational", openDate: "2023-10-09" },
+    { from: "Kengeri", to: "Mysuru Road", status: "operational", openDate: "2021-08-30" },
+    { from: "Mysuru Road", to: "Magadi Road", status: "operational", openDate: "2015-11-16" },
+    { from: "Magadi Road", to: "Mahatma Gandhi Road", status: "operational", openDate: "2016-04-30" },
+    { from: "Mahatma Gandhi Road", to: "Baiyappanahalli", status: "operational", openDate: "2011-10-20" },
+    { from: "Baiyappanahalli", to: "Krishnarajapura", status: "operational", openDate: "2023-10-09" },
+    { from: "Krishnarajapura", to: "Whitefield (Kadugodi)", status: "operational", openDate: "2023-03-26" },
   ],
+  underground: [
+    "Krantivira Sangolli Rayanna Railway Station",
+    "Nadaprabhu Kempegowda Station, Majestic",
+    "Sir M. Visvesvaraya Station, Central College",
+    "Dr. B.R. Ambedkar Station, Vidhana Soudha",
+    "Cubbon Park",
+  ],
+  atGrade: ["Baiyappanahalli"],
   source:
-    "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md.",
+    "BMRCL announcements + Wikipedia 'Purple Line (Namma Metro)' and 'List of Namma Metro stations', checked November 2026.",
 };
 
 // ---------------------------------------------------------------------------
-// Green Line — Madavara <-> Silk Institute. Fully operational.
+// Green Line — Madavara <-> Silk Institute. 32 stations.
 // ---------------------------------------------------------------------------
 export const green: LineDef = {
   id: "green",
   name: "Green Line",
   nameKn: "ಹಸಿರು ಮಾರ್ಗ",
   color: "#2E9E4C",
-  status: "operational",
+  lengthKm: 33.46,
   stations: [
     "Madavara",
     "Chikkabidarakallu",
-    "Manjunath Nagar",
+    "Manjunathanagara",
     "Nagasandra",
     "Dasarahalli",
     "Jalahalli",
@@ -122,7 +137,7 @@ export const green: LineDef = {
     "Sandal Soap Factory",
     "Mahalakshmi",
     "Rajajinagar",
-    "Kuvempu Road",
+    "Mahakavi Kuvempu Road",
     "Srirampura",
     "Mantri Square Sampige Road",
     "Nadaprabhu Kempegowda Station, Majestic",
@@ -142,32 +157,27 @@ export const green: LineDef = {
     "Thalaghattapura",
     "Silk Institute",
   ],
-  anchors: [
-    { index: 0, lat: 13.0453, lng: 77.4903 }, // Madavara
-    { index: 3, lat: 13.0447, lng: 77.5075 }, // Nagasandra
-    { index: 9, lat: 13.0284, lng: 77.554 }, // Yeshwanthpur
-    { index: 12, lat: 12.9915, lng: 77.5545 }, // Rajajinagar
-    { index: 16, lat: 12.9767, lng: 77.5713 }, // Majestic
-    { index: 19, lat: 12.9422, lng: 77.576 }, // National College
-    { index: 22, lat: 12.9294, lng: 77.5827 }, // Jayanagar
-    { index: 23, lat: 12.941, lng: 77.592 }, // RV Road
-    { index: 24, lat: 12.9161, lng: 77.573 }, // Banashankari
-    { index: 26, lat: 12.8887, lng: 77.5713 }, // Yelachenahalli
-    { index: 31, lat: 12.859, lng: 77.559 }, // Silk Institute
+  sections: [
+    { from: "Madavara", to: "Nagasandra", status: "operational", openDate: "2024-11-07" },
+    { from: "Nagasandra", to: "Peenya Industry", status: "operational", openDate: "2015-05-01" },
+    { from: "Peenya Industry", to: "Mantri Square Sampige Road", status: "operational", openDate: "2014-03-01" },
+    { from: "Mantri Square Sampige Road", to: "Yelachenahalli", status: "operational", openDate: "2017-06-18" },
+    { from: "Yelachenahalli", to: "Silk Institute", status: "operational", openDate: "2021-01-15" },
   ],
+  underground: ["Nadaprabhu Kempegowda Station, Majestic", "Chickpete", "Krishna Rajendra Market"],
   source:
-    "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026.",
+    "Wikipedia 'Green Line (Namma Metro)' and 'List of Namma Metro stations', checked November 2026.",
 };
 
 // ---------------------------------------------------------------------------
-// Yellow Line — RV Road <-> Bommasandra. Operational since 10 Aug 2025.
+// Yellow Line — RV Road <-> Bommasandra. 16 stations, open since Aug 2025.
 // ---------------------------------------------------------------------------
 export const yellow: LineDef = {
   id: "yellow",
   name: "Yellow Line",
   nameKn: "ಹಳದಿ ಮಾರ್ಗ",
   color: "#F2C300",
-  status: "operational",
+  lengthKm: 19.15,
   stations: [
     "Rashtreeya Vidyalaya Road",
     "Ragigudda",
@@ -186,49 +196,73 @@ export const yellow: LineDef = {
     "Biocon Hebbagodi",
     "Delta Electronics Bommasandra",
   ],
-  anchors: [
-    { index: 0, lat: 12.941, lng: 77.592 }, // RV Road
-    { index: 4, lat: 12.9166, lng: 77.6228 }, // Central Silk Board
-    { index: 11, lat: 12.8452, lng: 77.6602 }, // Electronic City
-    { index: 15, lat: 12.8065, lng: 77.6963 }, // Delta Electronics Bommasandra
+  sections: [
+    {
+      from: "Rashtreeya Vidyalaya Road",
+      to: "Delta Electronics Bommasandra",
+      status: "operational",
+      openDate: "2025-08-11",
+    },
   ],
+  underground: [],
   source:
-    "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026.",
+    "Deccan Herald opening coverage (inaugurated 10 Aug 2025, public service from 11 Aug) + Wikipedia 'List of Namma Metro stations', checked November 2026.",
 };
 
 // ---------------------------------------------------------------------------
-// Pink Line — under construction / partial opening, Kalena Agrahara <->
-// Nagawara corridor. Included with status flags only; not routable in v1.
+// Pink Line — Kalena Agrahara <-> Nagawara. 18 stations.
+// The 7.5 km elevated section (first six stations) is inaugurated on
+// 13 Nov 2026 with passenger service from 14 Nov. The 12 underground stations
+// north of Tavarekere are still being built.
 // ---------------------------------------------------------------------------
+export const PINK_OPENING_DATE = "2026-11-14";
+
 export const pink: LineDef = {
   id: "pink",
   name: "Pink Line",
   nameKn: "ಗುಲಾಬಿ ಮಾರ್ಗ",
   color: "#EC6EAD",
-  status: "under_construction",
+  lengthKm: 21.25,
   stations: [
     "Kalena Agrahara",
-    "Tavarekere",
+    "Hulimavu",
+    "IIMB",
+    "JP Nagar 4th Phase",
     "Jayadeva Hospital",
+    "Tavarekere",
     "Dairy Circle",
-    "Audugodi",
-    "South End Circle (Pink Line)",
     "Lakkasandra",
-    "National Military School",
     "Langford Town",
-    "Shanthinagar",
-    "Corporation Circle",
-    "Vidhana Soudha (Pink Line)",
-    "Mattikere",
+    "National Military School",
+    "Mahatma Gandhi Road",
+    "Shivajinagar",
+    "Cantonment Railway Station",
+    "Pottery Town",
+    "Tannery Road",
+    "Venkateshpura",
+    "Kadugundanahalli",
     "Nagawara",
   ],
-  anchors: [
-    { index: 0, lat: 12.8843, lng: 77.6089 }, // Kalena Agrahara
-    { index: 2, lat: 12.9285, lng: 77.6106 }, // Jayadeva Hospital
-    { index: 13, lat: 13.0398, lng: 77.6221 }, // Nagawara
+  sections: [
+    { from: "Kalena Agrahara", to: "Tavarekere", status: "opening_soon", openDate: PINK_OPENING_DATE },
+    { from: "Tavarekere", to: "Nagawara", status: "under_construction", expected: "March 2027" },
+  ],
+  underground: [
+    "Dairy Circle",
+    "Lakkasandra",
+    "Langford Town",
+    "National Military School",
+    "Mahatma Gandhi Road",
+    "Shivajinagar",
+    "Cantonment Railway Station",
+    "Pottery Town",
+    "Tannery Road",
+    "Venkateshpura",
+    "Kadugundanahalli",
+    "Nagawara",
   ],
   source:
-    "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing.",
+    "Wikipedia 'Pink Line (Namma Metro)' (station order, layout, length) + November 2026 press coverage of the Kalena Agrahara–Tavarekere opening (Oneindia, Urban Acres), checked 12 November 2026. Underground section date is a target, not confirmed.",
 };
 
 export const lines: LineDef[] = [purple, green, yellow, pink];
@@ -237,13 +271,61 @@ export const lines: LineDef[] = [purple, green, yellow, pink];
 export const interchanges: Record<string, LineId[]> = {
   "Nadaprabhu Kempegowda Station, Majestic": ["purple", "green"],
   "Rashtreeya Vidyalaya Road": ["green", "yellow"],
-  // Jayadeva Hospital is a planned (not yet built) interchange between the
-  // operational Yellow Line and the under-construction Pink Line.
   "Jayadeva Hospital": ["yellow", "pink"],
+  // Purple is open here today; the Pink platforms arrive with the underground section.
+  "Mahatma Gandhi Road": ["purple", "pink"],
 };
 
-/** Manually-set interchange walking transfer time, in seconds. */
+/** Modelled platform-to-platform walking time at each interchange, in seconds. */
 export const interchangeWalkSeconds: Record<string, number> = {
   "Nadaprabhu Kempegowda Station, Majestic": 240,
   "Rashtreeya Vidyalaya Road": 180,
+  "Jayadeva Hospital": 240,
+  "Mahatma Gandhi Road": 300,
+};
+
+/** Names people actually type: older names, abbreviations, locality names. */
+export const aliases: Record<string, string[]> = {
+  "Pantharapalya - Nayandahalli": ["Nayandahalli"],
+  "Mysuru Road": ["Mysore Road"],
+  "Sri Balagangadharanatha Swamiji Station, Hosahalli": ["Hosahalli"],
+  "Krantivira Sangolli Rayanna Railway Station": ["KSR Railway Station", "City Railway Station", "SBC"],
+  "Nadaprabhu Kempegowda Station, Majestic": ["Majestic", "Kempegowda"],
+  "Sir M. Visvesvaraya Station, Central College": ["Central College"],
+  "Dr. B.R. Ambedkar Station, Vidhana Soudha": ["Vidhana Soudha"],
+  "Mahatma Gandhi Road": ["MG Road", "M G Road"],
+  Halasuru: ["Ulsoor"],
+  "Swami Vivekananda Road": ["SV Road"],
+  Krishnarajapura: ["KR Puram", "KR Pura", "K R Puram"],
+  "Sri Sathya Sai Hospital": ["Sathya Sai"],
+  "Whitefield (Kadugodi)": ["Kadugodi"],
+  "Hopefarm Channasandra": ["Hope Farm", "Channasandra"],
+  Manjunathanagara: ["Manjunath Nagar"],
+  Goraguntepalya: ["Yeshwanthpur Industry"],
+  Yeshwanthpur: ["Yeshwantpur", "Yeshwantpura"],
+  "Mahakavi Kuvempu Road": ["Kuvempu Road"],
+  "Mantri Square Sampige Road": ["Sampige Road", "Malleshwaram"],
+  "Krishna Rajendra Market": ["KR Market", "K R Market", "City Market"],
+  "Rashtreeya Vidyalaya Road": ["RV Road", "R V Road"],
+  "Jaya Prakash Nagar": ["JP Nagar"],
+  "Central Silk Board": ["Silk Board"],
+  "Infosys Foundation Konappana Agrahara": ["Konappana Agrahara", "Infosys"],
+  "Biocon Hebbagodi": ["Hebbagodi"],
+  "Delta Electronics Bommasandra": ["Bommasandra"],
+  "Jayadeva Hospital": ["Jayadeva"],
+  IIMB: ["Bilekahalli", "IIM Bangalore", "IIM-B"],
+  "JP Nagar 4th Phase": ["N S Palya", "NS Palya"],
+  Tavarekere: ["Suddaguntepalya", "S G Palya", "SG Palya"],
+  "National Military School": ["Rashtriya Military School", "Vellara Junction"],
+  "Cantonment Railway Station": ["Cantonment", "Bangalore Cantonment"],
+  Kadugundanahalli: ["Kadugondanahalli", "KG Halli"],
+  Venkateshpura: ["Venkateshapura"],
+};
+
+/** Kannada names for stations whose OpenStreetMap record has none. */
+export const nameKnOverrides: Record<string, string> = {
+  "Dairy Circle": "ಡೈರಿ ವೃತ್ತ",
+  "JP Nagar 4th Phase": "ಜೆ.ಪಿ. ನಗರ 4ನೇ ಹಂತ",
+  IIMB: "ಐಐಎಂಬಿ",
+  Tavarekere: "ತಾವರೆಕೆರೆ",
 };

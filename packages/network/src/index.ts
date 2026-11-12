@@ -1,4 +1,5 @@
 import networkJson from "../../../data/network.json";
+import { isInService } from "./status";
 import { NetworkSchema, type Network, type Station, type Line, type Segment } from "./schema";
 
 let cached: Network | null = null;
@@ -31,14 +32,9 @@ export function getStationBySlug(slug: string): Station | undefined {
   return getStations().find((s) => s.slug === slug);
 }
 
-/** Routable stations: on at least one operational line. */
+/** Routable stations: at least one line there is open or has an opening day. */
 export function getRoutableStations(): Station[] {
-  return getStations().filter((s) =>
-    s.lines.some((m) => {
-      const line = getLines().find((l) => l.id === m.line);
-      return line?.status === "operational";
-    }),
-  );
+  return getStations().filter((s) => s.lines.some(isInService));
 }
 
 export function getLineById(id: string) {

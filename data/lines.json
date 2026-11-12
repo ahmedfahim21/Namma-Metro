@@ -9,7 +9,8 @@
       "Challaghatta",
       "Whitefield (Kadugodi)"
     ],
-    "source": "BMRCL public announcements + Wikipedia 'Purple Line (Namma Metro)' and per-station articles, checked September 2026. Station count (36 modelled here vs. 37 commonly cited) has one unresolved gap — see SOURCES.md."
+    "lengthKm": 43.49,
+    "source": "BMRCL announcements + Wikipedia 'Purple Line (Namma Metro)' and 'List of Namma Metro stations', checked November 2026."
   },
   {
     "id": "green",
@@ -21,7 +22,8 @@
       "Madavara",
       "Silk Institute"
     ],
-    "source": "Wikipedia 'Green Line (Namma Metro)' and per-station articles, checked September 2026."
+    "lengthKm": 33.46,
+    "source": "Wikipedia 'Green Line (Namma Metro)' and 'List of Namma Metro stations', checked November 2026."
   },
   {
     "id": "yellow",
@@ -33,18 +35,20 @@
       "Rashtreeya Vidyalaya Road",
       "Delta Electronics Bommasandra"
     ],
-    "source": "Deccan Herald opening coverage (10 Aug 2025) + Wikipedia per-station articles, checked September 2026."
+    "lengthKm": 19.15,
+    "source": "Deccan Herald opening coverage (inaugurated 10 Aug 2025, public service from 11 Aug) + Wikipedia 'List of Namma Metro stations', checked November 2026."
   },
   {
     "id": "pink",
     "name": "Pink Line",
     "nameKn": "ಗುಲಾಬಿ ಮಾರ್ಗ",
     "color": "#EC6EAD",
-    "status": "under_construction",
+    "status": "opening_soon",
     "terminals": [
       "Kalena Agrahara",
       "Nagawara"
     ],
-    "source": "Public BMRCL Phase 2 status updates (April–September 2026 station-opening reports); exact final station order for the northern half is unconfirmed — flagged 'under_construction' and excluded from routing."
+    "lengthKm": 21.25,
+    "source": "Wikipedia 'Pink Line (Namma Metro)' (station order, layout, length) + November 2026 press coverage of the Kalena Agrahara–Tavarekere opening (Oneindia, Urban Acres), checked 12 November 2026. Underground section date is a target, not confirmed."
   }
 ]

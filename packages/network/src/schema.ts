@@ -15,16 +15,32 @@ export const LineSchema = z.object({
   name: z.string(),
   nameKn: z.string().optional(),
   color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+  /** Best status of any section: a part-open line is "operational". */
   status: LineStatusSchema,
   terminals: z.tuple([z.string(), z.string()]),
+  /** Published route length, terminal to terminal. */
+  lengthKm: z.number().positive(),
   source: z.string(),
 });
 export type Line = z.infer<typeof LineSchema>;
 
+export const StationLayoutSchema = z.enum(["elevated", "underground", "at_grade"]);
+export type StationLayout = z.infer<typeof StationLayoutSchema>;
+
+const IsoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
 export const StationMembershipSchema = z.object({
   line: LineIdSchema,
   sequence: z.number().int().nonnegative(),
+  /** Status of this line's platforms at this station — a line can be part open. */
+  status: LineStatusSchema,
+  /** Day passenger service started, or is officially announced to start (IST). */
+  openDate: IsoDateSchema.optional(),
+  /** Free-text target for sections without a firm date, e.g. "March 2027". */
+  expected: z.string().optional(),
+  layout: StationLayoutSchema,
 });
+export type StationMembership = z.infer<typeof StationMembershipSchema>;
 
 export const ExitGateSchema = z.object({
   id: z.string(),
@@ -37,6 +53,8 @@ export const StationSchema = z.object({
   slug: z.string(),
   name: z.string(),
   nameKn: z.string().optional(),
+  /** Other names people search by: older names, abbreviations, locality names. */
+  aliases: z.array(z.string()).default([]),
   lat: z.number(),
   lng: z.number(),
   coordConfidence: z.enum(["surveyed", "approximate"]).default("approximate"),
@@ -58,6 +76,9 @@ export const SegmentSchema = z.object({
   to: z.string(),
   runSeconds: z.number().int().positive(),
   distanceMeters: z.number().int().positive(),
+  status: LineStatusSchema,
+  openDate: IsoDateSchema.optional(),
+  expected: z.string().optional(),
   source: z.string(),
 });
 export type Segment = z.infer<typeof SegmentSchema>;
@@ -84,15 +105,14 @@ export const TimetableEntrySchema = z.object({
 });
 export type TimetableEntry = z.infer<typeof TimetableEntrySchema>;
 
-export const FareSlabSchema = z.object({
-  minStops: z.number().int().nonnegative(),
-  maxStops: z.number().int().positive(),
+export const FareBandSchema = z.object({
+  /** Upper bound of the band in km, inclusive. The last band has none. */
+  maxKm: z.number().positive().nullable(),
   tokenFare: z.number().int().positive(),
 });
 
 export const FareRulesSchema = z.object({
-  slabs: z.array(FareSlabSchema).min(1),
-  sameStationFare: z.number().int().positive(),
+  bands: z.array(FareBandSchema).min(1),
   qrDiscountPct: z.number().min(0).max(100),
   smartCardPeakDiscountPct: z.number().min(0).max(100),
   smartCardOffPeakDiscountPct: z.number().min(0).max(100),

@@ -7,7 +7,7 @@
 //
 // Bump CACHE_VERSION whenever app-shell assets change so old caches are
 // dropped on activate.
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const SHELL_CACHE = `namma-metro-shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `namma-metro-runtime-${CACHE_VERSION}`;
 

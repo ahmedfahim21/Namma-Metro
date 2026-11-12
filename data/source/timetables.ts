@@ -29,7 +29,7 @@ export interface TimetableSpec {
 
 const SOURCE =
   "BMRCL published first/last train times + commonly reported peak (4-6 min) / "
-  + "off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live.";
+  + "off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live.";
 
 function standardBands(peakHeadway: number, offPeakHeadway: number, eveningHeadway: number): HeadwayBand[] {
   return [
@@ -49,11 +49,19 @@ const lineDirections: Record<LineId, [string, string]> = {
   purple: ["Whitefield-bound", "Challaghatta-bound"],
   green: ["Silk Institute-bound", "Madavara-bound"],
   yellow: ["Bommasandra-bound", "RV Road-bound"],
-  pink: ["Nagawara-bound", "Kalena Agrahara-bound"],
+  pink: ["Tavarekere-bound", "Kalena Agrahara-bound"],
   blue: ["Airport-bound", "Central-bound"],
 };
 
-function forLine(line: LineId, peak: number, offPeak: number, evening: number, satHeadway: number, sunHeadway: number): TimetableSpec[] {
+function forLine(
+  line: LineId,
+  peak: number,
+  offPeak: number,
+  evening: number,
+  satHeadway: number,
+  sunHeadway: number,
+  firstTrainMinute = 5 * 60,
+): TimetableSpec[] {
   const [dir1, dir2] = lineDirections[line];
   const specs: TimetableSpec[] = [];
   ([[dir1, 0], [dir2, 1]] as [string, 0 | 1][]).forEach(([direction, directionIndex]) => {
@@ -62,7 +70,7 @@ function forLine(line: LineId, peak: number, offPeak: number, evening: number, s
       direction,
       directionIndex,
       dayType: "weekday",
-      firstTrainMinute: 5 * 60,
+      firstTrainMinute,
       lastTrainMinute: 23 * 60,
       headwayBands: standardBands(peak, offPeak, evening),
       source: SOURCE,
@@ -72,7 +80,7 @@ function forLine(line: LineId, peak: number, offPeak: number, evening: number, s
       direction,
       directionIndex,
       dayType: "saturday",
-      firstTrainMinute: 5 * 60,
+      firstTrainMinute,
       lastTrainMinute: 23 * 60,
       headwayBands: weekendBands(satHeadway),
       source: SOURCE,
@@ -82,7 +90,8 @@ function forLine(line: LineId, peak: number, offPeak: number, evening: number, s
       direction,
       directionIndex,
       dayType: "sunday_holiday",
-      firstTrainMinute: 6 * 60,
+      // Services start at 07:00 on Sundays across the network.
+      firstTrainMinute: 7 * 60,
       lastTrainMinute: 23 * 60,
       headwayBands: weekendBands(sunHeadway),
       source: SOURCE,
@@ -95,4 +104,7 @@ export const timetables: TimetableSpec[] = [
   ...forLine("purple", 4 * 60, 7 * 60, 12 * 60, 6 * 60, 8 * 60),
   ...forLine("green", 4 * 60, 7 * 60, 12 * 60, 6 * 60, 8 * 60),
   ...forLine("yellow", 6 * 60, 10 * 60, 15 * 60, 10 * 60, 12 * 60),
+  // Pink opens with five trains on the Kalena Agrahara–Tavarekere section:
+  // a flat 8-minute service from 06:00 (07:00 Sundays) to 23:00.
+  ...forLine("pink", 8 * 60, 8 * 60, 8 * 60, 8 * 60, 8 * 60, 6 * 60),
 ];

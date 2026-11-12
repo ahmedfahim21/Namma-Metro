@@ -8,25 +8,25 @@ export const metadata: Metadata = {
 
 export default function OfflinePage() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <h1 className="text-2xl font-bold">Offline</h1>
+    <div className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6">
+      <h1 className="text-3xl tracking-tight">Offline</h1>
       <p className="mt-2 text-sm text-muted">
         Once you&apos;ve opened this app with a connection, the planner, fare engine and timetables
         all run entirely on your device — no network needed underground.
       </p>
 
-      <div className="mt-6 rounded-xl border border-border bg-surface p-4 text-sm">
+      <div className="mt-6 rounded-2xl border border-border bg-surface px-4 py-1 text-sm">
         <div className="flex justify-between border-b border-border py-2">
           <span>Stations cached</span>
-          <span className="font-medium">{stations.length}</span>
+          <span className="text-right text-muted">{stations.length}</span>
         </div>
         <div className="flex justify-between border-b border-border py-2">
           <span>Lines</span>
-          <span className="font-medium">{lines.map((l) => l.name).join(", ")}</span>
+          <span className="text-right text-muted">{lines.map((l) => l.name).join(", ")}</span>
         </div>
         <div className="flex justify-between py-2">
           <span>App shell</span>
-          <span className="font-medium">Cached on first visit</span>
+          <span className="text-right text-muted">Cached on first visit</span>
         </div>
       </div>
 

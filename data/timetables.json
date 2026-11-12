@@ -33,7 +33,7 @@
         "headwaySeconds": 720
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "purple",
@@ -49,14 +49,14 @@
         "headwaySeconds": 360
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "purple",
     "direction": "Whitefield-bound",
     "directionIndex": 0,
     "dayType": "sunday_holiday",
-    "firstTrainMinute": 360,
+    "firstTrainMinute": 420,
     "lastTrainMinute": 1380,
     "headwayBands": [
       {
@@ -65,7 +65,7 @@
         "headwaySeconds": 480
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "purple",
@@ -101,7 +101,7 @@
         "headwaySeconds": 720
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "purple",
@@ -117,14 +117,14 @@
         "headwaySeconds": 360
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "purple",
     "direction": "Challaghatta-bound",
     "directionIndex": 1,
     "dayType": "sunday_holiday",
-    "firstTrainMinute": 360,
+    "firstTrainMinute": 420,
     "lastTrainMinute": 1380,
     "headwayBands": [
       {
@@ -133,7 +133,7 @@
         "headwaySeconds": 480
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "green",
@@ -169,7 +169,7 @@
         "headwaySeconds": 720
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "green",
@@ -185,14 +185,14 @@
         "headwaySeconds": 360
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "green",
     "direction": "Silk Institute-bound",
     "directionIndex": 0,
     "dayType": "sunday_holiday",
-    "firstTrainMinute": 360,
+    "firstTrainMinute": 420,
     "lastTrainMinute": 1380,
     "headwayBands": [
       {
@@ -201,7 +201,7 @@
         "headwaySeconds": 480
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "green",
@@ -237,7 +237,7 @@
         "headwaySeconds": 720
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "green",
@@ -253,14 +253,14 @@
         "headwaySeconds": 360
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "green",
     "direction": "Madavara-bound",
     "directionIndex": 1,
     "dayType": "sunday_holiday",
-    "firstTrainMinute": 360,
+    "firstTrainMinute": 420,
     "lastTrainMinute": 1380,
     "headwayBands": [
       {
@@ -269,7 +269,7 @@
         "headwaySeconds": 480
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "yellow",
@@ -305,7 +305,7 @@
         "headwaySeconds": 900
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "yellow",
@@ -321,14 +321,14 @@
         "headwaySeconds": 600
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "yellow",
     "direction": "Bommasandra-bound",
     "directionIndex": 0,
     "dayType": "sunday_holiday",
-    "firstTrainMinute": 360,
+    "firstTrainMinute": 420,
     "lastTrainMinute": 1380,
     "headwayBands": [
       {
@@ -337,7 +337,7 @@
         "headwaySeconds": 720
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "yellow",
@@ -373,7 +373,7 @@
         "headwaySeconds": 900
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "yellow",
@@ -389,14 +389,14 @@
         "headwaySeconds": 600
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   },
   {
     "line": "yellow",
     "direction": "RV Road-bound",
     "directionIndex": 1,
     "dayType": "sunday_holiday",
-    "firstTrainMinute": 360,
+    "firstTrainMinute": 420,
     "lastTrainMinute": 1380,
     "headwayBands": [
       {
@@ -405,6 +405,142 @@
         "headwaySeconds": 720
       }
     ],
-    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked September 2026. Modelled, not live."
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
+  },
+  {
+    "line": "pink",
+    "direction": "Tavarekere-bound",
+    "directionIndex": 0,
+    "dayType": "weekday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
+  },
+  {
+    "line": "pink",
+    "direction": "Tavarekere-bound",
+    "directionIndex": 0,
+    "dayType": "saturday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
+  },
+  {
+    "line": "pink",
+    "direction": "Tavarekere-bound",
+    "directionIndex": 0,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 420,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
+  },
+  {
+    "line": "pink",
+    "direction": "Kalena Agrahara-bound",
+    "directionIndex": 1,
+    "dayType": "weekday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 420,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 420,
+        "endMinute": 600,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 600,
+        "endMinute": 1020,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 1020,
+        "endMinute": 1230,
+        "headwaySeconds": 480
+      },
+      {
+        "startMinute": 1230,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
+  },
+  {
+    "line": "pink",
+    "direction": "Kalena Agrahara-bound",
+    "directionIndex": 1,
+    "dayType": "saturday",
+    "firstTrainMinute": 360,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
+  },
+  {
+    "line": "pink",
+    "direction": "Kalena Agrahara-bound",
+    "directionIndex": 1,
+    "dayType": "sunday_holiday",
+    "firstTrainMinute": 420,
+    "lastTrainMinute": 1380,
+    "headwayBands": [
+      {
+        "startMinute": 0,
+        "endMinute": 1440,
+        "headwaySeconds": 480
+      }
+    ],
+    "source": "BMRCL published first/last train times + commonly reported peak (4-6 min) / off-peak (7-10 min) frequency bands, checked November 2026 (Pink Line figures from opening-week press coverage). Modelled, not live."
   }
 ]

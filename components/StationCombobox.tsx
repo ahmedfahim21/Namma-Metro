@@ -3,6 +3,8 @@
 import { useId, useMemo, useState } from "react";
 import type { Station } from "@/packages/network/src/schema";
 import { searchStations } from "@/lib/network";
+import { isInService } from "@/packages/network/src/status";
+import { lineColor } from "./LineBadge";
 
 export function StationCombobox({
   label,
@@ -23,7 +25,7 @@ export function StationCombobox({
 
   return (
     <div className="relative flex-1">
-      <label htmlFor={id} className="mb-1 block text-xs font-medium text-muted">
+      <label htmlFor={id} className="mb-1 block text-xs tracking-wide text-muted">
         {label}
       </label>
       <input
@@ -53,10 +55,19 @@ export function StationCombobox({
                   setOpen(false);
                 }}
               >
-                {s.name}
-                {s.interchange && (
-                  <span className="ml-2 text-xs text-muted">interchange</span>
-                )}
+                <span className="flex items-center gap-2">
+                  <span className="flex gap-1">
+                    {s.lines.filter(isInService).map((m) => (
+                      <span
+                        key={m.line}
+                        className="h-2 w-2 rounded-full"
+                        style={{ background: lineColor(m.line) }}
+                      />
+                    ))}
+                  </span>
+                  {s.name}
+                  {s.interchange && <span className="text-xs text-muted">interchange</span>}
+                </span>
               </button>
             </li>
           ))}

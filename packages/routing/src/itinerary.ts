@@ -1,6 +1,7 @@
 import type { Station, LineId, Segment } from "../../network/src/schema";
 import { buildGraph, type LineNode } from "./graph";
-import { shortestPath, type PathStep } from "./dijkstra";
+import { shortestPath, shortestTree, type PathStep } from "./dijkstra";
+import { nodeKey } from "./graph";
 
 export interface Leg {
   line: LineId;
@@ -30,7 +31,7 @@ export interface Itinerary {
   totalWalkSeconds: number;
   totalDurationSeconds: number;
   totalDistanceMeters: number;
-  /** Total stops traversed across the whole trip (used for the fare engine). */
+  /** Total stops traversed across the whole trip. */
   totalStops: number;
   originStation: string;
   destinationStation: string;
@@ -158,7 +159,52 @@ export function createRouter(stations: Station[], segments: Segment[]) {
       .sort((a, b) => a.totalDurationSeconds - b.totalDurationSeconds);
   }
 
-  return { graph, planTrip };
+  /**
+   * How far every reachable station is from `originId` on the fastest route:
+   * riding plus interchange walking, with no waiting time. Stations that cannot
+   * be reached are absent.
+   */
+  function reachFrom(originId: string): Map<string, Reach> {
+    const origin = stationById.get(originId);
+    const result = new Map<string, Reach>();
+    if (!origin) return result;
+    const sources: LineNode[] = origin.lines.map((m) => ({ station: origin.id, line: m.line }));
+    const { cost, arrivedBy } = shortestTree(graph, sources, (edge) => edge.seconds);
+
+    for (const station of stations) {
+      let best: LineNode | null = null;
+      for (const m of station.lines) {
+        const node = { station: station.id, line: m.line };
+        const c = cost.get(nodeKey(node));
+        if (c === undefined) continue;
+        if (!best || c < cost.get(nodeKey(best))!) best = node;
+      }
+      if (!best) continue;
+      let meters = 0;
+      let interchanges = 0;
+      let key = nodeKey(best);
+      let node = best;
+      for (let step = arrivedBy.get(key); step; step = arrivedBy.get(key)) {
+        if (step.edge!.kind === "ride") {
+          meters += distanceByEdge.get(`${node.line}::${step.node.station}->${node.station}`) ?? 0;
+        } else {
+          interchanges += 1;
+        }
+        node = step.node;
+        key = nodeKey(node);
+      }
+      result.set(station.id, { seconds: cost.get(nodeKey(best))!, meters, interchanges });
+    }
+    return result;
+  }
+
+  return { graph, planTrip, reachFrom };
+}
+
+export interface Reach {
+  seconds: number;
+  meters: number;
+  interchanges: number;
 }
 
 export type Router = ReturnType<typeof createRouter>;

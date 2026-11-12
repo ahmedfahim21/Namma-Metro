@@ -1,6 +1,7 @@
 import network from "@/data/network.json";
 import { createRouter } from "@/packages/routing/src/itinerary";
 import type { Station, Segment, Line, FareRules, TimetableEntry } from "@/packages/network/src/schema";
+import { isInService } from "@/packages/network/src/status";
 
 export const stations = network.stations as Station[];
 export const segments = network.segments as Segment[];
@@ -12,19 +13,29 @@ export const lineById = new Map(lines.map((l) => [l.id, l]));
 export const stationById = new Map(stations.map((s) => [s.id, s]));
 export const stationBySlug = new Map(stations.map((s) => [s.slug, s]));
 
+/** A station you can plan a trip to: at least one of its lines is open or has an opening day. */
 export function isRoutable(station: Station): boolean {
-  return station.lines.some((m) => lineById.get(m.line)?.status === "operational");
+  return station.lines.some(isInService);
 }
 
 export const routableStations = stations.filter(isRoutable);
 
-// Only ride on segments of operational lines — a non-operational line (e.g.
-// Pink, still under construction) can appear as station/interchange metadata
-// for the map, but must never be usable as a through-route.
-const operationalLineIds = new Set(
-  lines.filter((l) => l.status === "operational").map((l) => l.id),
-);
-const routableSegments = segments.filter((s) => operationalLineIds.has(s.line));
+// Sections still under construction (e.g. the Pink Line tunnel north of
+// Tavarekere) are drawn on the map but must never be usable as a through-route.
+export const routableSegments = segments.filter(isInService);
+
+const segmentIndex = new Map<string, Segment>();
+for (const segment of segments) {
+  segmentIndex.set(`${segment.line}:${segment.from}:${segment.to}`, segment);
+  segmentIndex.set(`${segment.line}:${segment.to}:${segment.from}`, segment);
+}
+
+/** The segment joining two neighbouring stations of a line, in either direction. */
+export function segmentBetween(line: string, a: string, b: string): Segment {
+  const segment = segmentIndex.get(`${line}:${a}:${b}`);
+  if (!segment) throw new Error(`No ${line} segment between "${a}" and "${b}".`);
+  return segment;
+}
 
 let cachedRouter: ReturnType<typeof createRouter> | null = null;
 export function getRouter() {
@@ -47,7 +58,10 @@ export function searchStations(query: string, limit = 8): Station[] {
       if (name === q) score = 100;
       else if (name.startsWith(q)) score = 80;
       else if (name.includes(q)) score = 50;
-      else if (s.nameKn?.includes(query)) score = 40;
+      else if (s.aliases.some((a) => a.toLowerCase() === q)) score = 90;
+      else if (s.aliases.some((a) => a.toLowerCase().startsWith(q))) score = 70;
+      else if (s.aliases.some((a) => a.toLowerCase().includes(q))) score = 45;
+      else if (s.nameKn?.includes(query.trim())) score = 40;
       return { s, score };
     })
     .filter((x) => x.score > 0)
